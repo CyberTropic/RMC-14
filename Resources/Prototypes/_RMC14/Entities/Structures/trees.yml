@@ -288,6 +288,8 @@
 - type: entity
   parent: RMCBaseTree
   id: RMCBaseTreeAlien
+  name: strange tree
+  description: Some kind of bizarre alien tree. It oozes with a sickly yellow sap.
   components:
   - type: Sprite
     sprite: _RMC14/Objects/Flora/flora_alien.rsi
@@ -305,8 +307,13 @@
 - type: entity
   parent: RMCBaseTreeAlien
   id: RMCAlienTree01
-  name: strange tree
-  description: Some kind of bizarre alien tree. It oozes with a sickly yellow sap.
   components:
   - type: Sprite
     state: alien01
+
+- type: entity
+  parent: RMCBaseTreeAlien
+  id: RMCAlienTree02
+  components:
+  - type: Sprite
+    state: alien02

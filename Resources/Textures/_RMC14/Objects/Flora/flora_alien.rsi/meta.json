@@ -9,6 +9,9 @@
     "states": [
         {
             "name": "alien01"
+        },
+        {
+            "name": "alien02"
         }
     ]
 }
