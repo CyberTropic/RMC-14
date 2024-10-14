@@ -317,3 +317,14 @@
   components:
   - type: Sprite
     state: alien02
+    
+- type: entity
+  parent: RMCBaseTreeAlien
+  id: RMCAlienPlantSmall01
+  components:
+  - type: Sprite
+    sprite: _RMC14/Objects/Flora/flora_alien_small.rsi
+    state: alienplant1
+    offset: 0,0
+  - type: Fixtures
+    fixtures: {}

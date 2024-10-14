@@ -1,0 +1,9 @@
+﻿- type: decal
+  parent: CMDecalBase
+  id: Alien1
+  tags: ["flora"]
+  snapCardinals: true
+  defaultSnap: false
+  sprite:
+    sprite: _RMC14\Decals\Flora\flora_alien.rsi
+    state: alienplant1
