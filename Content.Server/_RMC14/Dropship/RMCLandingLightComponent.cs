@@ -8,6 +8,6 @@ public sealed partial class RMCLandingLightComponent : Component
     [DataField]
     public EntityUid? LinkedDropshipDestination;
 
-    [DataField("on")]
+    [DataField]
     public bool On;
 }

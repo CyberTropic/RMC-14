@@ -429,6 +429,7 @@
   parent: BaseStructure
   id: RMCLandingLightBase
   name: landing light
+  suffix: off
   description: A landing light, if it's flashing stay clear!
   placement:
     mode: SnapgridCenter
@@ -445,4 +446,12 @@
   - type: Appearance  
   - type: Corrodible # Not destructible.
     isCorrodible: false
+    
+- type: entity
+  parent: RMCLandingLightBase
+  id: RMCLandingLight1
+  suffix: 1
+  components: 
+  - type: RMCLandingLight
+  
   
