@@ -423,3 +423,26 @@
       On: bbulb1
       Broken: bbulb-broken
       Burned: bbulb-burned
+
+# Landing lights
+- type: entity
+  parent: BaseStructure
+  id: RMCLandingLightBase
+  name: landing light
+  description: A landing light, if it's flashing stay clear!
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: false
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Sprite
+    sprite: _RMC14/Structures/landinglights.rsi
+    state: landingstripe
+  - type: InteractionOutline
+  - type: Appearance  
+  - type: Corrodible # Not destructible.
+    isCorrodible: false
+  
