@@ -72,6 +72,7 @@ public sealed class DropshipSystem : SharedDropshipSystem
         SubscribeLocalEvent<DropshipInFlyByComponent, FTLCompletedEvent>(OnInFlyByFTLCompleted);
 
         SubscribeLocalEvent<DropshipDestinationComponent, FTLUpdatedEvent>(OnFTLUpdated);
+        SubscribeLocalEvent<RMCLandingLightComponent, MapInitEvent>(OnLandingLightInit);
 
         Subs.BuiEvents<DropshipNavigationComputerComponent>(DropshipNavigationUiKey.Key,
             subs =>
@@ -86,50 +87,40 @@ public sealed class DropshipSystem : SharedDropshipSystem
 
     private void OnFTLUpdated(Entity<DropshipDestinationComponent> ent, ref FTLUpdatedEvent args)
     {
-        //Check landing lights linked, deferred to first ftl event
-        if (!_isLandingLightsLinked)
-        {
-            LinkLandingLights();
-            _isLandingLightsLinked = true;
-        }
-
         // Arriving
 
         // Departing
 
     }
 
-    private void LinkLandingLights()
+    public void OnLandingLightInit(Entity<RMCLandingLightComponent> ent, ref MapInitEvent args)
     {
-        var lights = EntityQueryEnumerator<RMCLandingLightComponent, TransformComponent>();
-        while (lights.MoveNext(out var landingLight, out var landingLightComp, out var landingLightTransform))
+        var landingLightTransform = Transform(ent);
+        Entity<DropshipDestinationComponent, TransformComponent>? closestDestination = null;
+        var destinations = EntityQueryEnumerator<DropshipDestinationComponent, TransformComponent>();
+        while (destinations.MoveNext(out var destination,
+                   out var destinationComponent,
+                   out var destinationTransform))
         {
-            Entity<DropshipDestinationComponent, TransformComponent>? closestDestination = null;
-            var destinations = EntityQueryEnumerator<DropshipDestinationComponent, TransformComponent>();
-            while (destinations.MoveNext(out var destination,
-                       out var destinationComponent,
-                       out var destinationTransform))
+            if (landingLightTransform.MapID != destinationTransform.MapID)
+                continue;
+
+            if (closestDestination == null)
             {
-                if (landingLightTransform.MapID != destinationTransform.MapID)
-                    continue;
-
-                if (closestDestination == null)
-                {
-                    closestDestination = (destination, destinationComponent, destinationTransform);
-                    continue;
-                }
-
-                if (landingLightTransform.Coordinates.TryDistance(EntityManager, destinationTransform.Coordinates, out var distance) &&
-                    landingLightTransform.Coordinates.TryDistance(EntityManager,
-                        closestDestination.Value.Comp2.Coordinates,
-                        out var oldDistance) &&
-                    distance < oldDistance)
-                {
-                    closestDestination = (destination, destinationComponent, destinationTransform);
-                }
+                closestDestination = (destination, destinationComponent, destinationTransform);
+                continue;
             }
-            landingLightComp.LinkedDropshipDestination = closestDestination;
+
+            if (landingLightTransform.Coordinates.TryDistance(EntityManager, destinationTransform.Coordinates, out var distance) &&
+                landingLightTransform.Coordinates.TryDistance(EntityManager,
+                    closestDestination.Value.Comp2.Coordinates,
+                    out var oldDistance) &&
+                distance < oldDistance)
+            {
+                closestDestination = (destination, destinationComponent, destinationTransform);
+            }
         }
+        ent.Comp.LinkedDropshipDestination = closestDestination;
     }
 
     private void OnActivateInWorld(Entity<DropshipNavigationComputerComponent> ent, ref ActivateInWorldEvent args)
