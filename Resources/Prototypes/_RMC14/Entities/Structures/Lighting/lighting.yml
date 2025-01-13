@@ -446,12 +446,38 @@
   - type: Appearance  
   - type: Corrodible # Not destructible.
     isCorrodible: false
-    
+        
 - type: entity
   parent: RMCLandingLightBase
+  id: RMCLandingLight0
+  suffix: 0
+  components: 
+  - type: RMCLandingLight
+  - type: Sprite
+    state: landingstripe0
+    
+- type: entity
+  parent: RMCLandingLight0
   id: RMCLandingLight1
   suffix: 1
   components: 
-  - type: RMCLandingLight
+  - type: Sprite
+    state: landingstripe1
+    
+- type: entity
+  parent: RMCLandingLight0
+  id: RMCLandingLight2
+  suffix: 2
+  components: 
+  - type: Sprite
+    state: landingstripe2
+    
+- type: entity
+  parent: RMCLandingLight0
+  id: RMCLandingLight3
+  suffix: 3
+  components: 
+  - type: Sprite
+    state: landingstripe3
   
   

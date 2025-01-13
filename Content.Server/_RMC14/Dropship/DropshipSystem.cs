@@ -51,8 +51,6 @@ public sealed class DropshipSystem : SharedDropshipSystem
     private TimeSpan _flyByTime;
     private TimeSpan _hijackTravelTime;
 
-    private bool _isLandingLightsLinked;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -60,7 +58,6 @@ public sealed class DropshipSystem : SharedDropshipSystem
         _dockingQuery = GetEntityQuery<DockingComponent>();
         _doorQuery = GetEntityQuery<DoorComponent>();
         _doorBoltQuery = GetEntityQuery<DoorBoltComponent>();
-        _isLandingLightsLinked = false;
 
         SubscribeLocalEvent<DropshipNavigationComputerComponent, ActivateInWorldEvent>(OnActivateInWorld);
 
@@ -71,8 +68,10 @@ public sealed class DropshipSystem : SharedDropshipSystem
 
         SubscribeLocalEvent<DropshipInFlyByComponent, FTLCompletedEvent>(OnInFlyByFTLCompleted);
 
+        SubscribeLocalEvent<RMCLandingLightComponent, FTLUpdatedEvent>(OnFTLUpdated);
+        SubscribeLocalEvent<RMCLandingLightComponent, MapInitEvent>(OnMapInitLandingLight);
+
         SubscribeLocalEvent<DropshipDestinationComponent, FTLUpdatedEvent>(OnFTLUpdated);
-        SubscribeLocalEvent<RMCLandingLightComponent, MapInitEvent>(OnLandingLightInit);
 
         Subs.BuiEvents<DropshipNavigationComputerComponent>(DropshipNavigationUiKey.Key,
             subs =>
@@ -85,15 +84,43 @@ public sealed class DropshipSystem : SharedDropshipSystem
         Subs.CVar(_config, RMCCVars.RMCDropshipHijackTravelTimeSeconds, v => _hijackTravelTime = TimeSpan.FromSeconds(v), true);
     }
 
-    private void OnFTLUpdated(Entity<DropshipDestinationComponent> ent, ref FTLUpdatedEvent args)
+    private void OnFTLUpdated(Entity<RMCLandingLightComponent> ent, ref FTLUpdatedEvent args)
     {
-        // Arriving
+        if (!TryComp(args.Shuttle, out FTLComponent? ftl))
+            return;
 
-        // Departing
+        if (ent.Comp.LinkedDropshipDestination == null)
+            InitializeLandingLight(ent);
+
+        if (!TryComp(ent.Comp.LinkedDropshipDestination, out DropshipDestinationComponent? dropshipDestination))
+            return;
+
+        if (args.Shuttle == dropshipDestination.Ship)
+        {
+            ent.Comp.On = (ftl.State == FTLState.Arriving);
+            return;
+        }
+        if (args.Shuttle == dropshipDestination.DepartingShip)
+        {
+            ent.Comp.On = (ftl.State == FTLState.Starting);
+            return;
+        }
+        ent.Comp.On = false;
 
     }
 
-    public void OnLandingLightInit(Entity<RMCLandingLightComponent> ent, ref MapInitEvent args)
+    private void OnFTLUpdated(Entity<DropshipDestinationComponent> ent, ref FTLUpdatedEvent args)
+    {
+        if (TryComp(ent.Comp.DepartingShip, out FTLComponent? ftl) && ftl.State != FTLState.Starting)
+            ent.Comp.DepartingShip = null;
+    }
+
+    private void OnMapInitLandingLight(Entity<RMCLandingLightComponent> ent, ref MapInitEvent args)
+    {
+        InitializeLandingLight(ent);
+    }
+
+    public void InitializeLandingLight(Entity<RMCLandingLightComponent> ent)
     {
         var landingLightTransform = Transform(ent);
         Entity<DropshipDestinationComponent, TransformComponent>? closestDestination = null;
@@ -246,6 +273,7 @@ public sealed class DropshipSystem : SharedDropshipSystem
 
         if (TryComp(dropship.Destination, out DropshipDestinationComponent? oldDestination))
         {
+            oldDestination.DepartingShip = oldDestination.Ship;
             oldDestination.Ship = null;
             Dirty(dropship.Destination.Value, oldDestination);
         }
