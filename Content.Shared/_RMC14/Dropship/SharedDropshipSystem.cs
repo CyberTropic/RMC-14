@@ -20,6 +20,7 @@ namespace Content.Shared._RMC14.Dropship;
 
 public abstract class SharedDropshipSystem : EntitySystem
 {
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
@@ -490,5 +491,10 @@ public abstract class SharedDropshipSystem : EntitySystem
 
         contained = container.ContainedEntities[0];
         return true;
+    }
+
+    private void SetLandingLightAppearance(Entity<RMCLandingLightComponent> uid, bool enable)
+    {
+        _appearance.SetData(uid, RMCLandingLightVisuals.On, enable);
     }
 }

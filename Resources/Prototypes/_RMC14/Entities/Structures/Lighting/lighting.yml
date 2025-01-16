@@ -446,6 +446,12 @@
   - type: Appearance  
   - type: Corrodible # Not destructible.
     isCorrodible: false
+  - type: GenericVisualizer
+    visuals:      
+      enum.RMCLandingLightVisuals.Enabled:
+        enum.RMCLandingLightVisuals.Layer:
+          True: { state: landingstripe }
+          False: { state: landingstripe0 }
         
 - type: entity
   parent: RMCLandingLightBase
