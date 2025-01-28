@@ -16,10 +16,15 @@
       state: bluealert
       visible: false
     - map: [ "enum.RMCAlertLevelDisplayVisualLayers.HourTens" ]
+      offset: 0.11, -0.4375
     - map: [ "enum.RMCAlertLevelDisplayVisualLayers.HourOnes" ]
+      offset: 0.28, -0.4375
     - map: [ "enum.RMCAlertLevelDisplayVisualLayers.Separator" ]
+      offset: 0.406, -0.4375
     - map: [ "enum.RMCAlertLevelDisplayVisualLayers.MinuteTens" ]
+      offset: 0.56, -0.4375
     - map: [ "enum.RMCAlertLevelDisplayVisualLayers.MinuteOnes" ]
+      offset: 0.73, -0.4375
   - type: Appearance
   - type: GenericVisualizer
     visuals:

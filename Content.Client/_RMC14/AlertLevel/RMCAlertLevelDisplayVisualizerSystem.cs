@@ -41,12 +41,6 @@ public sealed class RMCAlertLevelDisplayVisualizerSystem : EntitySystem
             var minuteTensState = $"{timeString[3]}";
             var minuteOnesState = $"{timeString[4]}";
 
-            sprite.LayerSetOffset(hourTensLayer, new Vector2(0.11f, -0.4375f));
-            sprite.LayerSetOffset(hourOnesLayer, new Vector2(0.28f, -0.4375f));
-            sprite.LayerSetOffset(separatorLayer, new Vector2(0.406f, -0.4375f));
-            sprite.LayerSetOffset(minuteTensLayer, new Vector2(0.56f, -0.4375f));
-            sprite.LayerSetOffset(minuteOnesLayer, new Vector2(0.73f, -0.4375f));
-
             sprite.LayerSetState(hourTensLayer, hourTensState);
             sprite.LayerSetState(hourOnesLayer, hourOnesState);
             sprite.LayerSetState(separatorLayer, separatorState);
