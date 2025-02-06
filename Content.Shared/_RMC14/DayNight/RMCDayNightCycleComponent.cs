@@ -11,8 +11,15 @@ public sealed partial class RMCDayNightCycleComponent : Component
     public TimeSpan RemainingTransitionTime = TimeSpan.Zero;
 
     [DataField, AutoNetworkedField]
-    public string PreviousColor = "#000000";
+    public List<TimeEntry> TransitionValues = [];
 
-    [DataField, AutoNetworkedField]
-    public string NextColor = "#000000";
+    [DataDefinition, NetSerializable, Serializable]
+    public sealed partial class TimeEntry
+    {
+        [DataField("colorHex")]
+        public string ColorHex { get; set; } = "#FFFFFF";
+
+        [DataField("time")]
+        public float Time { get; set; } // Normalized time (0-1)
+    }
 }

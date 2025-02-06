@@ -45,15 +45,16 @@ public sealed class RMCDayNightSystem : EntitySystem
         "#b97034",
     ];
 
-    public void LightTransition(MapLightComponent? mapLight, List<string> transition, float duration)
+    public void LightTransition(RMCDayNightCycleComponent dayNight, List<string> transition, float duration)
     {
-        if (mapLight is null)
-            return;
-
+        dayNight.TransitionValues = [];
         for (var i = 0; i < transition.Count; i++)
         {
-
+            dayNight.TransitionValues.Add(new() {ColorHex = transition[i], Time = (float)i / transition.Count * duration});
         }
+        dayNight.TotalTransitionTime = TimeSpan.FromSeconds(duration);
+        dayNight.RemainingTransitionTime = dayNight.TotalTransitionTime;
+
     }
 
     public override void Update(float frameTime)
@@ -62,7 +63,7 @@ public sealed class RMCDayNightSystem : EntitySystem
             return;
 
         var query = EntityQueryEnumerator<RMCDayNightCycleComponent, MapLightComponent>();
-        while (query.MoveNext(out EntityUid uid, out var dayNight, out var mapLight))
+        while (query.MoveNext(out var uid, out var dayNight, out var mapLight))
         {
             dayNight.RemainingTransitionTime -= TimeSpan.FromSeconds(frameTime);
 
@@ -73,11 +74,12 @@ public sealed class RMCDayNightSystem : EntitySystem
             }
 
             var progress = dayNight.RemainingTransitionTime / dayNight.TotalTransitionTime;
+            // Previous color = value before t, next color = value after t
             var currentColor = InterpolateHexColors(dayNight.PreviousColor, dayNight.NextColor, (float)progress);
 
             mapLight.AmbientLightColor = currentColor;
-            Dirty(uid.Value, mapLight);
-            Dirty(uid.Value, dayNight);
+            Dirty(uid, mapLight);
+            Dirty(uid, dayNight);
 
         }
     }
