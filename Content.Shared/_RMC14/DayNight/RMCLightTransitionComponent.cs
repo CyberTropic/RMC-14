@@ -2,14 +2,18 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared._RMC14.DayNight;
 
-public sealed partial class RMCDayNightCycleComponent : Component
+public sealed partial class RMCLightTransitionComponent : Component
 {
+
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField, AutoNetworkedField]
     public TimeSpan TotalTransitionTime = TimeSpan.Zero;
 
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField, AutoNetworkedField]
     public TimeSpan RemainingTransitionTime = TimeSpan.Zero;
 
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField, AutoNetworkedField]
     public List<TimeEntry> TransitionValues = [];
 
