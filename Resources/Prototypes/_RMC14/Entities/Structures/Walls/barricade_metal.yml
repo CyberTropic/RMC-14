@@ -413,6 +413,7 @@
     - state: folding_metal
       map: ["enum.DoorVisualLayers.Base"]
     - map: [ "acided" ]
+    - map: [ "damageVisualsLayer" ]
     drawdepth: WallTops
   - type: RMCRepairable
     heal: 200
@@ -441,6 +442,13 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: AnimationPlayer
+  - type: DamageVisuals
+    targetLayers: damageVisualsLayer
+    thresholds: [4, 8, 12]
+    damageDivisor: 25
+    trackAllDamage: true
+    damageOverlay:
+      sprite: _RMC14/Structures/Walls/Barricades/folding_metal_cracks.rsi
   - type: GenericVisualizer
     visuals:
       enum.BarbedWireVisualLayers.Wire:
@@ -456,6 +464,10 @@
             visible: true
           False:
             visible: false
+      enum.DoorVisuals.State:
+        damageVisualsLayer:
+          Open: { sprite: _RMC14/Structures/Walls/Barricades/folding_metal_cracks.rsi }
+          Closed: { sprite: _RMC14/Structures/Walls/Barricades/folding_metal_closed_cracks.rsi }
   - type: InteractionOutline
   - type: Door
     openSpriteState: folding_metal_closed
