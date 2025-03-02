@@ -16,7 +16,7 @@ public sealed partial class RMCPlanetMapPrototypeComponent : Component
     public CamouflageType Camouflage = CamouflageType.Jungle;
 
     [DataField, AutoNetworkedField]
-    public List<ScenarioBase> Scenarios = new();
+    public List<ScenarioEntry> Scenarios = new();
 
     [DataField, AutoNetworkedField]
     public int MinPlayers;
@@ -24,10 +24,26 @@ public sealed partial class RMCPlanetMapPrototypeComponent : Component
     [DataField(required: true), AutoNetworkedField]
     public string Announcement = string.Empty;
 
-    [DataRecord]
-    public abstract class ScenarioBase;
+    [DataRecord, AutoGenerateComponentState]
+    public sealed partial class ScenarioEntry : Component
+    {
+        [DataField, AutoNetworkedField]
+        public ScenarioEntryType Type = ScenarioEntryType.Regular;
 
-    public sealed class ScenarioType : ScenarioBase
+        // For Regular type
+        [DataField, AutoNetworkedField]
+        public string ScenarioName = string.Empty;
+
+        [DataField, AutoNetworkedField]
+        public float Probability = 0f;
+
+        // For Pick type
+        [DataField, AutoNetworkedField]
+        public List<ScenarioChoice> ScenarioList = new();
+    }
+
+    [DataRecord,AutoGenerateComponentState]
+    public sealed partial class ScenarioChoice  : Component
     {
         [DataField, AutoNetworkedField]
         public string ScenarioName = string.Empty;
@@ -36,9 +52,9 @@ public sealed partial class RMCPlanetMapPrototypeComponent : Component
         public float Probability = 0f;
     }
 
-    public sealed class ScenarioPick : ScenarioBase
+    public enum ScenarioEntryType
     {
-        [DataField, AutoNetworkedField]
-        public List<ScenarioType> Pick = new();
+        Regular,
+        Pick
     }
 }

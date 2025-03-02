@@ -2,6 +2,7 @@
 using Content.Server.Decals;
 using Content.Shared._RMC14.Areas;
 using Content.Shared._RMC14.Map;
+using Content.Shared._RMC14.Rules;
 using Content.Shared.Decals;
 using Content.Shared.GameTicking;
 using Robust.Server.Physics;
@@ -34,6 +35,8 @@ public sealed class MapInsertSystem : EntitySystem
     private MapId? _map;
     private int _index;
 
+    public List<string> CurrentMapActiveScenario = new();
+
     private readonly HashSet<EntityUid> _lookupEnts = new();
     private readonly HashSet<EntityUid> _immuneEnts = new();
 
@@ -46,6 +49,40 @@ public sealed class MapInsertSystem : EntitySystem
     {
         _map = null;
         _index = 0;
+    }
+
+    public void ProcessMapScenario(List<RMCPlanetMapPrototypeComponent.ScenarioEntry> compScenarios)
+    {
+        foreach (var scenarioEntry in compScenarios)
+        {
+            if (scenarioEntry.Type == RMCPlanetMapPrototypeComponent.ScenarioEntryType.Pick)
+            {
+                var cumulativeProbability = 0f;
+                var randomProbability = _random.NextFloat();
+                foreach (var scenarioType in scenarioEntry.ScenarioList)
+                {
+                    cumulativeProbability += scenarioType.Probability;
+                    if (cumulativeProbability >= randomProbability)
+                    {
+                        CurrentMapActiveScenario.Add(scenarioType.ScenarioName);
+                        break;
+                    }
+                }
+            }
+            else if (scenarioEntry.Type == RMCPlanetMapPrototypeComponent.ScenarioEntryType.Regular)
+            {
+                if (_random.Prob(scenarioEntry.Probability))
+                {
+                    CurrentMapActiveScenario.Add(scenarioEntry.ScenarioName);
+                }
+            }
+        }
+
+        Logger.Debug("Active scenarios:");
+        foreach (var s in CurrentMapActiveScenario)
+        {
+            Logger.Debug(s);
+        }
     }
 
     public void ProcessMapInsert(Entity<MapInsertComponent> ent)

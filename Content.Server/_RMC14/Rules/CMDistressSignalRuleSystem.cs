@@ -1036,6 +1036,11 @@ public sealed class CMDistressSignalRuleSystem : GameRuleSystem<CMDistressSignal
         rule.Comp.XenoMap = grids[0];
 
         //Process map inserts
+        if (SelectedPlanetMap != null)
+        {
+            _mapInsert.ProcessMapScenario(SelectedPlanetMap.Value.Comp.Scenarios);
+        }
+
         var mapInsertQuery = EntityQueryEnumerator<MapInsertComponent>();
         while (mapInsertQuery.MoveNext(out var uid, out var mapInsert))
         {
