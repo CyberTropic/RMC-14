@@ -297,6 +297,7 @@
     durationMultiplier: 0.666
   - type: RMCCanBeFultoned
   - type: CMArmor
+  - type: CriticalGraceTime
 
 - type: entity
   abstract: true
@@ -390,6 +391,10 @@
     whitelist:
       tags:
       - CMRollerBed
+  - type: RMCBuckleDrawDepth
+    buckleDepth: Mobs
+  - type: RMCBuckleOffset
+    offset: 0, 0.5
 
 - type: entity
   abstract: true
