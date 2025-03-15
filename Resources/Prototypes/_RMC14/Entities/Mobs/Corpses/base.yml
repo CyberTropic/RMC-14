@@ -8,6 +8,7 @@
   components:
   - type: RandomHumanoidAppearance
     randomizeName: false
+    species: [Human, Dwarf, Felinid, Arachnid, Reptilian, Diona, Moth, SlimePerson, Avali, Vulpkanin, Rodentia]
   - type: Damageable
     damage:
       types:

@@ -1,6 +1,8 @@
 using Content.Server.CharacterAppearance.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Preferences;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Humanoid.Systems;
 
@@ -8,6 +10,7 @@ public sealed class RandomHumanoidAppearanceSystem : EntitySystem
 {
     [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -22,6 +25,11 @@ public sealed class RandomHumanoidAppearanceSystem : EntitySystem
         if (!TryComp(uid, out HumanoidAppearanceComponent? humanoid) || !string.IsNullOrEmpty(humanoid.Initial))
         {
             return;
+        }
+
+        if (component.Species.Count > 0)
+        {
+            humanoid.Species = _random.Pick(component.Species);
         }
 
         var profile = HumanoidCharacterProfile.RandomWithSpecies(humanoid.Species);
