@@ -1,7 +1,9 @@
-﻿using System.Numerics;
+﻿using System.Linq;
+using System.Numerics;
 using Content.Server.Decals;
 using Content.Shared._RMC14.Areas;
 using Content.Shared._RMC14.Map;
+using Content.Shared._RMC14.Rules;
 using Content.Shared.Decals;
 using Content.Shared.GameTicking;
 using Robust.Server.Physics;
@@ -33,6 +35,7 @@ public sealed class MapInsertSystem : EntitySystem
 
     private MapId? _map;
     private int _index;
+    public List<string> CurrentMapActiveScenario = new();
 
     private readonly HashSet<EntityUid> _lookupEnts = new();
     private readonly HashSet<EntityUid> _immuneEnts = new();
@@ -46,6 +49,37 @@ public sealed class MapInsertSystem : EntitySystem
     {
         _map = null;
         _index = 0;
+    }
+
+    public void ProcessMapScenario(List<RMCPlanetMapPrototypeComponent.MapInsertScenario> compScenarios)
+    {
+        foreach (var scenarioEntry in compScenarios)
+        {
+            if (scenarioEntry.ScenarioNames.Count != scenarioEntry.ScenarioProbabilities.Count)
+            {
+                CurrentMapActiveScenario.Add(_random.Pick(scenarioEntry.ScenarioNames));
+            }
+            else
+            {
+                var randomProbability = _random.NextFloat();
+                var cumulativeProbability = 0f;
+                foreach (var (scenarioName, scenarioProbability) in scenarioEntry.ScenarioNames.Zip(scenarioEntry.ScenarioProbabilities))
+                {
+                    cumulativeProbability += scenarioProbability;
+                    if (cumulativeProbability >= randomProbability)
+                    {
+                        CurrentMapActiveScenario.Add(scenarioName);
+                        break;
+                    }
+                }
+            }
+        }
+
+        Logger.Debug("Active scenarios:");
+        foreach (var activeScenario in CurrentMapActiveScenario)
+        {
+            Logger.Debug(activeScenario);
+        }
     }
 
     public void ProcessMapInsert(Entity<MapInsertComponent> ent, bool forceSpawn = false)

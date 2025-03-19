@@ -1,5 +1,6 @@
 using Content.Shared._RMC14.Item;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Shared._RMC14.Rules;
@@ -19,4 +20,18 @@ public sealed partial class RMCPlanetMapPrototypeComponent : Component
 
     [DataField(required: true), AutoNetworkedField]
     public string Announcement = string.Empty;
+
+    [DataField, AutoNetworkedField]
+    public List<MapInsertScenario> ScenarioList = new();
+
+    [DataDefinition]
+    [Serializable, NetSerializable]
+    public partial struct MapInsertScenario()
+    {
+        [DataField, AutoNetworkedField]
+        public List<string> ScenarioNames = new();
+
+        [DataField, AutoNetworkedField]
+        public List<float> ScenarioProbabilities = new();
+    }
 }
