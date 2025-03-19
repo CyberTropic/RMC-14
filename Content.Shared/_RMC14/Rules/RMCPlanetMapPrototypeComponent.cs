@@ -1,5 +1,6 @@
 using Content.Shared._RMC14.Item;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Shared._RMC14.Rules;
@@ -24,8 +25,9 @@ public sealed partial class RMCPlanetMapPrototypeComponent : Component
     [DataField(required: true), AutoNetworkedField]
     public string Announcement = string.Empty;
 
-    [DataRecord, AutoGenerateComponentState]
-    public sealed partial class ScenarioEntry : Component
+    [DataDefinition]
+    [Serializable, NetSerializable]
+    public partial struct ScenarioEntry()
     {
         [DataField, AutoNetworkedField]
         public ScenarioEntryType Type = ScenarioEntryType.Regular;
@@ -37,13 +39,15 @@ public sealed partial class RMCPlanetMapPrototypeComponent : Component
         [DataField, AutoNetworkedField]
         public float Probability = 0f;
 
-        // For Pick type
+        // For Choice type
         [DataField, AutoNetworkedField]
         public List<ScenarioChoice> ScenarioList = new();
     }
 
-    [DataRecord,AutoGenerateComponentState]
-    public sealed partial class ScenarioChoice  : Component
+
+    [DataDefinition]
+    [Serializable, NetSerializable]
+    public partial struct ScenarioChoice()
     {
         [DataField, AutoNetworkedField]
         public string ScenarioName = string.Empty;
@@ -55,6 +59,6 @@ public sealed partial class RMCPlanetMapPrototypeComponent : Component
     public enum ScenarioEntryType
     {
         Regular,
-        Pick
+        Choice
     }
 }

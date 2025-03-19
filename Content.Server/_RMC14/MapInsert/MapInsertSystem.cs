@@ -55,7 +55,7 @@ public sealed class MapInsertSystem : EntitySystem
     {
         foreach (var scenarioEntry in compScenarios)
         {
-            if (scenarioEntry.Type == RMCPlanetMapPrototypeComponent.ScenarioEntryType.Pick)
+            if (scenarioEntry.Type == RMCPlanetMapPrototypeComponent.ScenarioEntryType.Choice)
             {
                 var cumulativeProbability = 0f;
                 var randomProbability = _random.NextFloat();
