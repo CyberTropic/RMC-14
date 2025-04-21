@@ -110,8 +110,8 @@
 - type: entity
   parent: RMCMedalRibbonWhite
   id: RMCMedalRibbonWhiteService
-  name: white award ribbon
-  description: A white ribbon awarded to civilians for participation in a UNMC-sponsored event. It is a very common award, and is typically the first award a civilian would receive.
+  name: employee of the week award
+  description: A white ribbon awarded to employees for their performance during the week. It is a very common award, and is typically the first award an employee would receive.
   
 - type: entity
   parent: RMCMedalBase
@@ -130,8 +130,8 @@
 - type: entity
   parent: RMCMedalRibbonYellow
   id: RMCMedalRibbonYellowService
-  name: yellow award ribbon
-  description: A bright yellow ribbon awarded to civilians for placing third in a UNMC-sponsored event. It is a somewhat common award, signifying their dedication and support for the organization.
+  name: employee of the month award
+  description: A bright yellow ribbon awarded to employees for their outstanding performance during the month. It is a somewhat common award, signifying their dedication and support for the team.
   
 - type: entity
   parent: RMCMedalBase
@@ -150,8 +150,8 @@
 - type: entity
   parent: RMCMedalRibbonRed
   id: RMCMedalRibbonRedService
-  name: red award ribbon
-  description: A vibrant red ribbon awarded to civilians for placing second in a UNMC-sponsored event. It is a rare award, signifying their dedication and support for the organization.
+  name: employee of the quarter award
+  description: A vibrant red ribbon awarded to employees for their exceptional performance during the quarter. It is a rare award, signifying their significant dedication and support for the team.
   
 - type: entity
   parent: RMCMedalBase
@@ -170,6 +170,6 @@
 - type: entity
   parent: RMCMedalRibbonBlue
   id: RMCMedalRibbonBlueService
-  name: blue award ribbon
-  description: A very prestigious blue ribbon awarded to civilians for placing first in a UNMC-sponsored event. Such awards require significant amounts of time and dedication to achieve.
+  name: employee of the year award
+  description: A very prestigious blue ribbon awarded to employees for their exemplary performance throughout the year. Such awards represent the highest level of sustained effort and dedication within the team.
 
