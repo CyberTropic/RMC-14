@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Threading.Tasks;
 using Content.IntegrationTests;
 using Content.Server.GameTicking;
@@ -63,10 +64,18 @@ namespace Content.MapRenderer.Painters
             var mapLoader = entityManager.System<MapLoaderSystem>();
             var mapSys = entityManager.System<SharedMapSystem>();
 
-            await server.WaitPost(() =>
+            Entity<MapComponent>? loadedMap = null;
+
+            /*await server.WaitPost(() =>
             {
-                mapLoader.TryLoadMap(new ResPath("/Maps/_RMC14/lv624.yml"), out _, out _);
-            });
+                if(mapLoader.TryLoadMap(new ResPath("/Maps/_RMC14/lv624.yml"), out loadedMap, out _))
+                    mapSys.InitializeMap((loadedMap.Value, loadedMap.Value));
+            });*/
+
+
+            await pair.WaitClientCommand($"loadmap 10 /Maps/_RMC14/lv624.yml");
+            // await pair.WaitClientCommand($"mapinit 10");
+            // await pair.WaitClientCommand($"tp 0 0 10");
 
             await pair.RunTicksSync(10);
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
@@ -89,7 +98,7 @@ namespace Content.MapRenderer.Painters
                 }
 
                 var mapId = sEntityManager.System<GameTicker>().DefaultMap;
-                grids = sMapManager.GetAllGrids(mapId).ToArray();
+                grids = sMapManager.GetAllGrids(new MapId(10)).ToArray();
 
                 foreach (var (uid, _) in grids)
                 {
@@ -103,12 +112,23 @@ namespace Content.MapRenderer.Painters
 
             foreach (var (uid, grid) in grids)
             {
+
+                mapSys.RegenerateAabb(grid);
+                int minX, minY, maxX, maxY;
+                var tiles = mapSys.GetAllTiles(uid, grid).ToList();
+                minX = tiles.Min(t => t.X);
+                minY = tiles.Min(t => t.Y);
+                maxX = tiles.Max(t => t.X);
+                maxY = tiles.Max(t => t.Y);
+
+                /*Console.WriteLine($"Regenerated AABB for grid {uid}: {grid.LocalAABB.ToString()}");
                 // Skip empty grids
                 if (grid.LocalAABB.IsEmpty())
                 {
                     Console.WriteLine($"Warning: Grid {uid} was empty. Skipping image rendering.");
                     continue;
-                }
+                }*/
+                grid.LocalAABB = new Box2(new Vector2(minX, minY), new Vector2(maxX, maxY));
 
                 var tileXSize = grid.TileSize * TilePainter.TileImageSize;
                 var tileYSize = grid.TileSize * TilePainter.TileImageSize;
@@ -120,8 +140,10 @@ namespace Content.MapRenderer.Painters
                 var top = bounds.Top;
                 var bottom = bounds.Bottom;
 
+
                 var w = (int) Math.Ceiling(right - left) * tileXSize;
                 var h = (int) Math.Ceiling(top - bottom) * tileYSize;
+
 
                 var gridCanvas = new Image<Rgba32>(w, h);
 
