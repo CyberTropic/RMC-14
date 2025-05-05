@@ -8,12 +8,14 @@ using Content.Server.Maps;
 using Robust.Client.GameObjects;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
@@ -56,6 +58,15 @@ namespace Content.MapRenderer.Painters
 
             var sEntityManager = server.ResolveDependency<IServerEntityManager>();
             var sPlayerManager = server.ResolveDependency<IPlayerManager>();
+
+            var entityManager = server.ResolveDependency<IEntityManager>();
+            var mapLoader = entityManager.System<MapLoaderSystem>();
+            var mapSys = entityManager.System<SharedMapSystem>();
+
+            await server.WaitPost(() =>
+            {
+                mapLoader.TryLoadMap(new ResPath("/Maps/_RMC14/lv624.yml"), out _, out _);
+            });
 
             await pair.RunTicksSync(10);
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
