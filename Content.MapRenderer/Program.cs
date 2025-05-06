@@ -105,8 +105,8 @@ namespace Content.MapRenderer
 
             if (arguments.ArgumentsAreFileNames)
             {
-                Console.WriteLine("Retrieving map ids by map file names...");
-
+                Console.WriteLine("Retrieving maps by map file names...");
+                /*
                 Console.Write("Fetching map prototypes... ");
                 await using var pair = await PoolManager.GetServerClient();
                 var mapPrototypes = pair.Server
@@ -133,6 +133,7 @@ namespace Content.MapRenderer
                 }
 
                 arguments.Maps = ids;
+                */
             }
 
             await Run(arguments);
@@ -155,18 +156,20 @@ namespace Content.MapRenderer
                 };
 
                 mapViewerData.ParallaxLayers.Add(LayerGroup.DefaultParallax());
-                var directory = Path.Combine(arguments.OutputPath, map);
+
+                var baseMapName = Path.GetFileNameWithoutExtension(map);
+                var directory = Path.Combine(arguments.OutputPath, baseMapName);
 
                 var i = 0;
                 try
                 {
-                    await foreach (var renderedGrid in MapPainter.Paint(map))
+                    await foreach (var renderedGrid in MapPainter.Paint(map, arguments.ArgumentsAreFileNames))
                     {
                         var grid = renderedGrid.Image;
                         Directory.CreateDirectory(directory);
 
                         var fileName = Path.GetFileNameWithoutExtension(map);
-                        var savePath = $"{directory}{Path.DirectorySeparatorChar}{fileName}-{i}.{arguments.Format}";
+                        var savePath = Path.Combine(directory, $"{fileName}-{i}.{arguments.Format}");
 
                         Console.WriteLine($"Writing grid of size {grid.Width}x{grid.Height} to {savePath}");
 

@@ -56,7 +56,7 @@ namespace Content.MapRenderer.Painters
 
             // Decals are always painted before entities, and are also optional.
             if (_decals.TryGetValue(gridUid, out var decals))
-                _decalPainter.Run(gridCanvas, CollectionsMarshal.AsSpan(decals));
+                _decalPainter.Run(gridCanvas, CollectionsMarshal.AsSpan(decals), customOffset);
 
 
             _entityPainter.Run(gridCanvas, entities, customOffset);

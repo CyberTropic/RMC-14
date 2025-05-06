@@ -25,7 +25,7 @@ namespace Content.MapRenderer.Painters
 {
     public sealed class MapPainter
     {
-        public static async IAsyncEnumerable<RenderedGridImage<Rgba32>> Paint(string map)
+        public static async IAsyncEnumerable<RenderedGridImage<Rgba32>> Paint(string map, bool mapIsFilename = false)
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -36,7 +36,7 @@ namespace Content.MapRenderer.Painters
                 Connected = true,
                 Fresh = true,
                 // Seriously whoever made MapPainter use GameMapPrototype I wish you step on a lego one time.
-                Map = map,
+                Map = mapIsFilename ? "Empty" : map,
             });
 
             var server = pair.Server;
@@ -66,17 +66,11 @@ namespace Content.MapRenderer.Painters
 
             Entity<MapComponent>? loadedMap = null;
 
-            /*await server.WaitPost(() =>
+            if (mapIsFilename)
             {
-                if(mapLoader.TryLoadMap(new ResPath("/Maps/_RMC14/lv624.yml"), out loadedMap, out _))
-                    mapSys.InitializeMap((loadedMap.Value, loadedMap.Value));
-            });*/
-
-
-            await pair.WaitClientCommand($"loadmap 10 /Maps/_RMC14/lv624.yml");
-            await pair.WaitClientCommand($"showmarkers");
-            // await pair.WaitClientCommand($"mapinit 10");
-            // await pair.WaitClientCommand($"tp 0 0 10");
+                await pair.WaitClientCommand($"loadmap 10 {map}");
+                await pair.WaitClientCommand("showmarkers");
+            }
 
             await pair.RunTicksSync(10);
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
@@ -114,12 +108,18 @@ namespace Content.MapRenderer.Painters
             foreach (var (uid, grid) in grids)
             {
                 var tiles = mapSys.GetAllTiles(uid, grid).ToList();
+                if (tiles.Count == 0)
+                {
+                    Console.WriteLine($"Warning: Grid {uid} was empty. Skipping image rendering.");
+                    continue;
+                }
+
                 var minX = tiles.Min(t => t.X);
                 var minY = tiles.Min(t => t.Y);
                 var maxX = tiles.Max(t => t.X);
                 var maxY = tiles.Max(t => t.Y);
 
-                /*Console.WriteLine($"Regenerated AABB for grid {uid}: {grid.LocalAABB.ToString()}");
+                /*
                 // Skip empty grids
                 if (grid.LocalAABB.IsEmpty())
                 {
@@ -139,8 +139,8 @@ namespace Content.MapRenderer.Painters
 
                 // var w = (int) Math.Ceiling(right - left) * tileXSize;
                 // var h = (int) Math.Ceiling(top - bottom) * tileYSize;
-                var w = (maxX - minX) * tileXSize;
-                var h = (maxY - minY) * tileYSize;
+                var w = (maxX - minX + 1) * tileXSize;
+                var h = (maxY - minY + 1) * tileYSize;
 
                 var customOffset = new Vector2(-minX, -minY);
 
