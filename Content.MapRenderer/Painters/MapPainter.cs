@@ -68,6 +68,7 @@ namespace Content.MapRenderer.Painters
 
             if (mapIsFilename)
             {
+                //TODO: try loadgrid -> if false: loadmap
                 await pair.WaitClientCommand($"loadmap 10 {map}");
                 await pair.WaitClientCommand("showmarkers");
             }
