@@ -65,12 +65,30 @@ namespace Content.MapRenderer.Painters
             var mapSys = entityManager.System<SharedMapSystem>();
 
             Entity<MapComponent>? loadedMap = null;
+            Entity<MapGridComponent>[] grids = [];
+
+            var isPlanetMap = false;
 
             if (mapIsFilename)
             {
-                //TODO: try loadgrid -> if false: loadmap
-                await pair.WaitClientCommand($"loadmap 10 {map}");
-                await pair.WaitClientCommand("showmarkers");
+                await server.WaitPost(() =>
+                {
+                    if (mapLoader.TryLoadGrid(new ResPath(map), out loadedMap, out var loadedGrid))
+                    {
+                        Console.WriteLine($"Found grid at {map}");
+                        grids = [(Entity<MapGridComponent>)loadedGrid];
+                    }
+                    else if (mapLoader.TryLoadMap(new ResPath(map), out loadedMap, out var loadedGrids))
+                    {
+                        Console.WriteLine($"Found map at {map}");
+                        grids = loadedGrids.ToArray();
+                        isPlanetMap = true;
+                    }
+                    else
+                    {
+                        throw new System.IO.FileNotFoundException($"Failed to load map or grid from file: {map}");
+                    }
+                });
             }
 
             await pair.RunTicksSync(10);
@@ -80,7 +98,6 @@ namespace Content.MapRenderer.Painters
 
             var tilePainter = new TilePainter(client, server);
             var entityPainter = new GridPainter(client, server);
-            Entity<MapGridComponent>[] grids = null!;
             var xformQuery = sEntityManager.GetEntityQuery<TransformComponent>();
             var xformSystem = sEntityManager.System<SharedTransformSystem>();
 
@@ -93,8 +110,11 @@ namespace Content.MapRenderer.Painters
                     sEntityManager.DeleteEntity(playerEntity.Value);
                 }
 
-                var mapId = sEntityManager.System<GameTicker>().DefaultMap;
-                grids = sMapManager.GetAllGrids(new MapId(10)).ToArray();
+                if (!mapIsFilename)
+                {
+                    var mapId = sEntityManager.System<GameTicker>().DefaultMap;
+                    grids = sMapManager.GetAllGrids(mapId).ToArray();
+                }
 
                 foreach (var (uid, _) in grids)
                 {
@@ -108,43 +128,47 @@ namespace Content.MapRenderer.Painters
 
             foreach (var (uid, grid) in grids)
             {
-                var tiles = mapSys.GetAllTiles(uid, grid).ToList();
-                if (tiles.Count == 0)
-                {
-                    Console.WriteLine($"Warning: Grid {uid} was empty. Skipping image rendering.");
-                    continue;
-                }
-
-                var minX = tiles.Min(t => t.X);
-                var minY = tiles.Min(t => t.Y);
-                var maxX = tiles.Max(t => t.X);
-                var maxY = tiles.Max(t => t.Y);
-
-                /*
-                // Skip empty grids
-                if (grid.LocalAABB.IsEmpty())
-                {
-                    Console.WriteLine($"Warning: Grid {uid} was empty. Skipping image rendering.");
-                    continue;
-                }*/
                 var tileXSize = grid.TileSize * TilePainter.TileImageSize;
                 var tileYSize = grid.TileSize * TilePainter.TileImageSize;
+                int w, h;
+                var customOffset = new Vector2();
 
-                var bounds = grid.LocalAABB;
+                if (isPlanetMap)
+                {
+                    var tiles = mapSys.GetAllTiles(uid, grid).ToList();
+                    if (tiles.Count == 0)
+                    {
+                        Console.WriteLine($"Warning: Grid {uid} was empty. Skipping image rendering.");
+                        continue;
+                    }
 
-                var left = bounds.Left;
-                var right = bounds.Right;
-                var top = bounds.Top;
-                var bottom = bounds.Bottom;
+                    var minX = tiles.Min(t => t.X);
+                    var minY = tiles.Min(t => t.Y);
+                    var maxX = tiles.Max(t => t.X);
+                    var maxY = tiles.Max(t => t.Y);
+                    w = (maxX - minX + 1) * tileXSize;
+                    h = (maxY - minY + 1) * tileYSize;
+                    customOffset = new Vector2(-minX, -minY);
+                }
+                else
+                {
+                    // Skip empty grids
+                    if (grid.LocalAABB.IsEmpty())
+                    {
+                        Console.WriteLine($"Warning: Grid {uid} was empty. Skipping image rendering.");
+                        continue;
+                    }
 
+                    var bounds = grid.LocalAABB;
 
-                // var w = (int) Math.Ceiling(right - left) * tileXSize;
-                // var h = (int) Math.Ceiling(top - bottom) * tileYSize;
-                var w = (maxX - minX + 1) * tileXSize;
-                var h = (maxY - minY + 1) * tileYSize;
+                    var left = bounds.Left;
+                    var right = bounds.Right;
+                    var top = bounds.Top;
+                    var bottom = bounds.Bottom;
 
-                var customOffset = new Vector2(-minX, -minY);
-
+                    w = (int) Math.Ceiling(right - left) * tileXSize;
+                    h = (int) Math.Ceiling(top - bottom) * tileYSize;
+                }
 
                 var gridCanvas = new Image<Rgba32>(w, h);
 
