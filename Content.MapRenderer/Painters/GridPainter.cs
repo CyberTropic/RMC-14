@@ -59,7 +59,7 @@ namespace Content.MapRenderer.Painters
                 _decalPainter.Run(gridCanvas, CollectionsMarshal.AsSpan(decals));
 
 
-            _entityPainter.Run(gridCanvas, entities);
+            _entityPainter.Run(gridCanvas, entities, customOffset);
             Console.WriteLine($"{nameof(GridPainter)} painted grid {gridUid} in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
         }
 

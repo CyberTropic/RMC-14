@@ -74,6 +74,7 @@ namespace Content.MapRenderer.Painters
 
 
             await pair.WaitClientCommand($"loadmap 10 /Maps/_RMC14/lv624.yml");
+            await pair.WaitClientCommand($"showmarkers");
             // await pair.WaitClientCommand($"mapinit 10");
             // await pair.WaitClientCommand($"tp 0 0 10");
 
@@ -112,14 +113,11 @@ namespace Content.MapRenderer.Painters
 
             foreach (var (uid, grid) in grids)
             {
-
-                mapSys.RegenerateAabb(grid);
-                int minX, minY, maxX, maxY;
                 var tiles = mapSys.GetAllTiles(uid, grid).ToList();
-                minX = tiles.Min(t => t.X);
-                minY = tiles.Min(t => t.Y);
-                maxX = tiles.Max(t => t.X);
-                maxY = tiles.Max(t => t.Y);
+                var minX = tiles.Min(t => t.X);
+                var minY = tiles.Min(t => t.Y);
+                var maxX = tiles.Max(t => t.X);
+                var maxY = tiles.Max(t => t.Y);
 
                 /*Console.WriteLine($"Regenerated AABB for grid {uid}: {grid.LocalAABB.ToString()}");
                 // Skip empty grids
@@ -128,8 +126,6 @@ namespace Content.MapRenderer.Painters
                     Console.WriteLine($"Warning: Grid {uid} was empty. Skipping image rendering.");
                     continue;
                 }*/
-                grid.LocalAABB = new Box2(new Vector2(minX, minY), new Vector2(maxX, maxY));
-
                 var tileXSize = grid.TileSize * TilePainter.TileImageSize;
                 var tileYSize = grid.TileSize * TilePainter.TileImageSize;
 
@@ -141,16 +137,20 @@ namespace Content.MapRenderer.Painters
                 var bottom = bounds.Bottom;
 
 
-                var w = (int) Math.Ceiling(right - left) * tileXSize;
-                var h = (int) Math.Ceiling(top - bottom) * tileYSize;
+                // var w = (int) Math.Ceiling(right - left) * tileXSize;
+                // var h = (int) Math.Ceiling(top - bottom) * tileYSize;
+                var w = (maxX - minX) * tileXSize;
+                var h = (maxY - minY) * tileYSize;
+
+                var customOffset = new Vector2(-minX, -minY);
 
 
                 var gridCanvas = new Image<Rgba32>(w, h);
 
                 await server.WaitPost(() =>
                 {
-                    tilePainter.Run(gridCanvas, uid, grid);
-                    entityPainter.Run(gridCanvas, uid, grid);
+                    tilePainter.Run(gridCanvas, uid, grid, customOffset);
+                    entityPainter.Run(gridCanvas, uid, grid, customOffset);
 
                     gridCanvas.Mutate(e => e.Flip(FlipMode.Vertical));
                 });
