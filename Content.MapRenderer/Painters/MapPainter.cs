@@ -73,20 +73,11 @@ namespace Content.MapRenderer.Painters
             {
                 await server.WaitPost(() =>
                 {
-                    if (mapLoader.TryLoadGrid(new ResPath(map), out loadedMap, out var loadedGrid))
+                    if (mapLoader.TryLoadGeneric(new ResPath(map), out var loadedMaps, out var loadedGrids))
                     {
-                        Console.WriteLine($"Found grid at {map}");
-                        grids = [(Entity<MapGridComponent>)loadedGrid];
-                    }
-                    else if (mapLoader.TryLoadMap(new ResPath(map), out loadedMap, out var loadedGrids))
-                    {
-                        Console.WriteLine($"Found map at {map}");
                         grids = loadedGrids.ToArray();
-                        isPlanetMap = true;
-                    }
-                    else
-                    {
-                        throw new System.IO.FileNotFoundException($"Failed to load map or grid from file: {map}");
+                        if (loadedMaps.Count > 0)
+                            isPlanetMap = true;
                     }
                 });
             }
