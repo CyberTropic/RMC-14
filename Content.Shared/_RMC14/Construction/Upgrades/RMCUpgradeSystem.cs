@@ -1,4 +1,5 @@
 ﻿using Content.Shared._RMC14.Marines.Skills;
+using Content.Shared._RMC14.Tools;
 using Content.Shared._RMC14.Xenonids.Acid;
 using Content.Shared.Damage;
 using Content.Shared.Hands.EntitySystems;
@@ -53,6 +54,23 @@ public sealed class RMCUpgradeSystem : EntitySystem
 
         var user = args.User;
         var used = args.Used;
+
+        if (HasComp<MultitoolComponent>(used))
+        {
+            if (ent.Comp.Downgrade != null)
+            {
+                RemoveUpgrade(ent, user);
+                args.Handled = true;
+                return;
+            }
+            else
+            {
+                var noUpgradePopup = Loc.GetString("rmc-construction-no-upgrade-to-remove");
+                _popup.PopupClient(noUpgradePopup, ent, user, PopupType.SmallCaution);
+                args.Handled = true;
+                return;
+            }
+        }
 
         if (!_upgradeItemQuery.TryComp(used, out var upgradeItem))
             return;
@@ -125,15 +143,32 @@ public sealed class RMCUpgradeSystem : EntitySystem
             QueueDel(upgradeItem);
         }
 
+        PerformUpgrade(ent, upgradeComp, user);
+    }
+
+    private void RemoveUpgrade(Entity<RMCConstructionUpgradeTargetComponent> ent, EntityUid user)
+    {
+        if (!_skills.HasSkill(user, ent.Comp.Skill, ent.Comp.SkillAmountRequired))
+        {
+            var failPopup = Loc.GetString("rmc-construction-failure", ("ent", ent));
+            _popup.PopupClient(failPopup, ent, user, PopupType.SmallCaution);
+            return;
+        }
+
+
+    }
+
+    private void PerformUpgrade(Entity<RMCConstructionUpgradeTargetComponent> oldEntity, RMCConstructionUpgradeComponent upgradeComp, EntityUid user)
+    {
         if (_net.IsClient)
             return;
 
-        var coordinates = _transform.GetMapCoordinates(ent);
-        var rotation = _transform.GetWorldRotation(ent);
+        var coordinates = _transform.GetMapCoordinates(oldEntity);
+        var rotation = _transform.GetWorldRotation(oldEntity);
 
         DamageSpecifier? transferredDamage = null;
 
-        if (TryComp<DamageableComponent>(ent, out var damageComp))
+        if (TryComp<DamageableComponent>(oldEntity, out var damageComp))
             transferredDamage = damageComp.Damage;
 
         var spawn = Spawn(upgradeComp.UpgradedEntity, coordinates, rotation: rotation.GetCardinalDir().ToAngle());
@@ -143,11 +178,11 @@ public sealed class RMCUpgradeSystem : EntitySystem
         if (transferredDamage != null && TryComp<DamageableComponent>(spawn, out var newDamageComp))
             _damageable.SetDamage(spawn, newDamageComp, transferredDamage);
 
-        var upgradeEv = new RMCConstructionUpgradedEvent(spawn, ent.Owner);
-        RaiseLocalEvent(ent.Owner, upgradeEv);
+        var upgradeEv = new RMCConstructionUpgradedEvent(spawn, oldEntity.Owner);
+        RaiseLocalEvent(oldEntity.Owner, upgradeEv);
         RaiseLocalEvent(spawn, upgradeEv, broadcast: true);
 
-        QueueDel(ent.Owner);
+        QueueDel(oldEntity.Owner);
     }
 
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs ev)

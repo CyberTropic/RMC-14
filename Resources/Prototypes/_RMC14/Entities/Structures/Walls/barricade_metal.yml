@@ -208,6 +208,7 @@
         sprite: _RMC14/Structures/Walls/Barricades/burn_barricade_cracks.rsi
     - type: RMCConstructionUpgradeTarget
       upgrades: null
+      downgrade: CMBarricadeMetal
 
 - type: entity
   parent: CMBarricadeMetal
@@ -231,6 +232,7 @@
         sprite: _RMC14/Structures/Walls/Barricades/brute_barricade_cracks.rsi
     - type: RMCConstructionUpgradeTarget
       upgrades: null
+      downgrade: CMBarricadeMetal
 
 - type: entity
   parent: CMBarricadeMetal
@@ -253,6 +255,7 @@
         sprite: _RMC14/Structures/Walls/Barricades/explosive_barricade_cracks.rsi
     - type: RMCConstructionUpgradeTarget
       upgrades: null
+      downgrade: CMBarricadeMetal
 
 # Turnstile (not sure how to make a one-way door so for now it is a glorified fence)
 - type: entity
