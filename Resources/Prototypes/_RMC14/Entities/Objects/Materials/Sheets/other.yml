@@ -1,6 +1,6 @@
 # Phoron
 - type: material
-  id: CMPhoron
+  id: RMCPhoron
   stackEntity: CMSheetPhoron
   name: materials-phoron
   icon: { sprite: _RMC14/Objects/Materials/Sheets/phoron.rsi, state: phoron }
@@ -23,7 +23,7 @@
   - type: Material
   - type: PhysicalComposition
     materialComposition:
-      CMPhoron: 100
+      RMCPhoron: 100
   - type: Stack
     stackType: CMPhoron
     count: 50

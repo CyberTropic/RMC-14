@@ -1,0 +1,34 @@
+﻿<controls:FancyWindow
+    xmlns="https://spacestation14.io"
+    xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    Title="{Loc 'portable-generator-ui-title'}"
+    MinSize="450 250"
+    SetSize="450 250">
+    <BoxContainer Margin="4 0" Orientation="Horizontal">
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="2" VerticalAlignment="Top" Margin="5">
+            <GridContainer Margin="2 0 0 0" Columns="2" HorizontalExpand="True">
+                <Label Name="StatusLabel" Text="{Loc 'rmc-portable-generator-ui-power-switch'}" HorizontalExpand="True" />
+                <Control MinWidth="120">
+                    <Button Name="StartButton" Text="{Loc 'portable-generator-ui-start'}" />
+                    <Button Name="StopButton" Text="{Loc 'portable-generator-ui-stop'}" />
+                    <Label Name="LabelUnanchored" Text="{Loc 'portable-generator-ui-unanchored'}" />
+                </Control>
+                <!-- Power -->
+                <Label Text="{Loc 'portable-generator-ui-target-power-label'}"/>
+                <SpinBox Name="TargetPower" HorizontalExpand="True"/>
+                <Label Text="{Loc 'portable-generator-ui-fuel-use-label'}"/>
+                <ProgressBar Name="FuelFraction" MinValue="0" MaxValue="1" HorizontalExpand="True"/>
+                <Label Text="{Loc 'portable-generator-ui-fuel-left-label'}"/>
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                    <Label Name="FuelLeft" Text="0" HorizontalExpand="True"/>
+                    <Button Name="FuelEject" Text="{Loc 'portable-generator-ui-eject'}" />
+                </BoxContainer>
+            </GridContainer>
+        </BoxContainer>
+        <cc:VSeparator StyleClasses="LowDivider"/>
+        <PanelContainer Margin="12 0 0 0" StyleClasses="Inset" VerticalAlignment="Center">
+            <SpriteView Name="EntityView" SetSize="64 64" Scale="2 2" OverrideDirection="South" Margin="15"/>
+        </PanelContainer>
+    </BoxContainer>
+</controls:FancyWindow>

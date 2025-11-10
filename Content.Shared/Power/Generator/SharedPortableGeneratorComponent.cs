@@ -48,14 +48,9 @@ public sealed partial class PortableGeneratorComponent : Component
 /// Sent to the server to adjust the targeted power level of a portable generator.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class PortableGeneratorSetTargetPowerMessage : BoundUserInterfaceMessage
+public sealed class PortableGeneratorSetTargetPowerMessage(int targetPower) : BoundUserInterfaceMessage
 {
-    public int TargetPower;
-
-    public PortableGeneratorSetTargetPowerMessage(int targetPower)
-    {
-        TargetPower = targetPower;
-    }
+    public int TargetPower = targetPower;
 }
 
 /// <summary>

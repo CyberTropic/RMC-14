@@ -1,0 +1,1 @@
+﻿rmc-portable-generator-ui-power-switch = Power switch

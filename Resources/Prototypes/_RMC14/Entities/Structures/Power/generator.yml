@@ -128,6 +128,13 @@
               node: machineFrame
             - !type:DoActsBehavior
               acts: ["Destruction"]
+    - type: RMCPortableGenerator
+    - type: UserInterface
+      interfaces:
+        enum.RMCPortableGeneratorUIKey.Key:
+          type: RMCPortableGeneratorBui
+    - type: ActivatableUI
+      key: enum.RMCPortableGeneratorUIKey.Key
 
 - type: entity
   parent: RMCPortableGeneratorBase
@@ -137,6 +144,9 @@
   components:
     - type: Sprite
       state: portgen0
+    - type: MaterialStorage
+      storageLimit: 10000
+      materialWhiteList: [RMCPhoron]
 
 - type: entity
   parent: RMCPortableGeneratorBase
