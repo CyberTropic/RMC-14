@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Materials;
 using Content.Shared.Stacks;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -27,6 +28,12 @@ public sealed partial class RMCPortableGeneratorComponent : Component
 
     [DataField]
     public float MaxTargetPower = 30000.0f;
+
+    [DataField]
+    public SoundSpecifier StartSoundEmpty = new SoundCollectionSpecifier("GeneratorTugEmpty");
+
+    [DataField]
+    public SoundSpecifier StartSound = new SoundCollectionSpecifier("GeneratorTug");
 }
 
 
@@ -71,4 +78,10 @@ public sealed class RMCPortableGeneratorStopMessage : BoundUserInterfaceMessage
 [Serializable, NetSerializable]
 public sealed class RMCPortableGeneratorEjectFuelMessage : BoundUserInterfaceMessage
 {
+}
+
+[Serializable, NetSerializable]
+public enum RMCGeneratorVisuals : byte
+{
+    Running,
 }
