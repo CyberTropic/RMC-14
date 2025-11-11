@@ -1,10 +1,11 @@
-﻿using Robust.Server.GameObjects;
+﻿using Content.Shared.Materials;
 
 namespace Content.Shared._RMC14.Power;
 
 public sealed partial class RMCPortableGeneratorSystem : EntitySystem
 {
     [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly SharedMaterialStorageSystem _materialStorage = default!;
 
     public override void Initialize()
     {
@@ -33,7 +34,8 @@ public sealed partial class RMCPortableGeneratorSystem : EntitySystem
 
     public void OnEjectFuelRequested(EntityUid uid, RMCPortableGeneratorComponent component, RMCPortableGeneratorEjectFuelMessage args)
     {
-        Logger.Debug("Eject fuel requested");
+        // EjectAllMaterial is in Server only, so we send an event to it
+        RaiseLocalEvent(uid, RMCGeneratorEmpty.Instance);
     }
 
     public override void Update(float frameTime)
@@ -50,8 +52,15 @@ public sealed partial class RMCPortableGeneratorSystem : EntitySystem
         if (!_uiSystem.IsUiOpen(uid, RMCPortableGeneratorUIKey.Key))
             return;
 
+        var remainingFuel = _materialStorage.GetMaterialAmount(uid, comp.Material);
+
         // Send the shared RMCPortableGeneratorUiState to the client using the RMC UI key.
         _uiSystem.SetUiState(uid, RMCPortableGeneratorUIKey.Key,
-            new RMCPortableGeneratorUiState(comp));
+            new RMCPortableGeneratorUiState(comp, remainingFuel));
     }
+}
+
+public sealed class RMCGeneratorEmpty
+{
+    public static readonly RMCGeneratorEmpty Instance = new();
 }

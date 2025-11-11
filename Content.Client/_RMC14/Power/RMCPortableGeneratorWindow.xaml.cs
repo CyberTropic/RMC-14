@@ -74,5 +74,7 @@ public sealed partial class RMCPortableGeneratorWindow : FancyWindow
             StatusLabel.Text = _loc.GetString("portable-generator-ui-status-stopped");
             StatusLabel.SetOnlyStyleClass("Danger");
         }
+
+        FuelLeft.Text = state.RemainingFuel.ToString();
     }
 }

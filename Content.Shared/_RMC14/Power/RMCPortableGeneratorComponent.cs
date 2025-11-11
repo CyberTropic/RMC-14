@@ -1,4 +1,5 @@
-﻿using Content.Shared.Stacks;
+﻿using Content.Shared.Materials;
+using Content.Shared.Stacks;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -13,7 +14,7 @@ public sealed partial class RMCPortableGeneratorComponent : Component
     public bool On;
 
     [DataField]
-    public ProtoId<StackPrototype>? Material = "CMPhoron";
+    public ProtoId<MaterialPrototype>  Material = "RMCPhoron";
 
     [DataField]
     public int MaxFuelUnits = 100;
@@ -37,23 +38,18 @@ public enum RMCPortableGeneratorUIKey : byte
 
 
 [Serializable, NetSerializable]
-public sealed class RMCPortableGeneratorUiState : BoundUserInterfaceState
+public sealed class RMCPortableGeneratorUiState(
+    RMCPortableGeneratorComponent component,
+    float remainingFuel)
+    : BoundUserInterfaceState
 {
-    public float RemainingFuel;
-    public float TargetPower;
-    public float MaximumPower;
+    public float RemainingFuel = remainingFuel;
+    public float TargetPower = component.TargetPower;
+    public float MaximumPower = component.MaxTargetPower;
     public float OptimalPower;
-    public bool On;
+    public bool On = component.On;
 
-    public RMCPortableGeneratorUiState(
-        RMCPortableGeneratorComponent component)
-    {
-        // RemainingFuel = remainingFuel;
-        TargetPower = component.TargetPower;
-        MaximumPower = component.MaxTargetPower;
-        // OptimalPower = component.OptimalPower;
-        On = component.On;
-    }
+    // OptimalPower = component.OptimalPower;
 }
 
 [Serializable, NetSerializable]

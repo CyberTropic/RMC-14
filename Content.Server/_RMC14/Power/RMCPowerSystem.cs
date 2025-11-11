@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using Content.Server.Materials;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.PowerCell;
@@ -23,6 +24,7 @@ public sealed class RMCPowerSystem : SharedRMCPowerSystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedPointLightSystem _light = default!;
+    [Dependency] private readonly MaterialStorageSystem _materialStorage = default!;
 
     [ViewVariables]
     private TimeSpan _nextUpdate;
@@ -53,8 +55,15 @@ public sealed class RMCPowerSystem : SharedRMCPowerSystem
         SubscribeLocalEvent<RMCPowerReceiverComponent, PowerChangedEvent>(OnReceiverPowerChanged);
         SubscribeLocalEvent<RMCPowerUsageDisplayComponent, ExaminedEvent>(OnUsageDisplayEvent);
 
+        SubscribeLocalEvent<RMCPortableGeneratorComponent,RMCGeneratorEmpty>(OnGeneratorEmpty);
+
         Subs.CVar(_config, RMCCVars.RMCPowerUpdateEverySeconds, v => _updateEvery = TimeSpan.FromSeconds(v), true);
         Subs.CVar(_config, RMCCVars.RMCPowerLoadMultiplier, v => _powerLoadMultiplier = v, true);
+    }
+
+    private void OnGeneratorEmpty(Entity<RMCPortableGeneratorComponent> ent, ref RMCGeneratorEmpty args)
+    {
+        _materialStorage.EjectAllMaterial(ent);
     }
 
     private void OnUsageDisplayEvent(Entity<RMCPowerUsageDisplayComponent> ent, ref ExaminedEvent args)
