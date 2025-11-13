@@ -56,6 +56,9 @@ public sealed partial class RMCPortableGeneratorWindow : FancyWindow
     {
         MaximumPower = state.MaximumPower;
 
+        if (!TargetPower.LineEditControl.HasKeyboardFocus())
+            TargetPower.OverrideValue((int)(state.TargetPower / 1000.0f));
+
         var unanchored = !_entityManager.GetComponent<TransformComponent>(_entity).Anchored;
         var on = !unanchored && state.On;
         var off = !unanchored && !state.On;
@@ -75,6 +78,8 @@ public sealed partial class RMCPortableGeneratorWindow : FancyWindow
             StatusLabel.SetOnlyStyleClass("Danger");
         }
 
-        FuelLeft.Text = state.RemainingFuel.ToString();
+        FuelLeftTitle.Text = _loc.GetString("rmc-portable-generator-ui-fuel-left-title", ("type", state.FuelType));
+        FuelFraction.Value = state.RemainingFuel - (int) state.RemainingFuel;
+        FuelLeft.Text = ((int) Math.Floor(state.RemainingFuel)).ToString();
     }
 }

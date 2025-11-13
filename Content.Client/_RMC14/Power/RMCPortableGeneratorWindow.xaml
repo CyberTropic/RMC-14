@@ -19,7 +19,7 @@
                 <SpinBox Name="TargetPower" HorizontalExpand="True"/>
                 <Label Text="{Loc 'portable-generator-ui-fuel-use-label'}"/>
                 <ProgressBar Name="FuelFraction" MinValue="0" MaxValue="1" HorizontalExpand="True"/>
-                <Label Text="{Loc 'portable-generator-ui-fuel-left-label'}"/>
+                <Label Name="FuelLeftTitle" Text="{Loc 'rmc-portable-generator-ui-fuel-left-label'}"/>
                 <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
                     <Label Name="FuelLeft" Text="0" HorizontalExpand="True"/>
                     <Button Name="FuelEject" Text="{Loc 'portable-generator-ui-eject'}" />

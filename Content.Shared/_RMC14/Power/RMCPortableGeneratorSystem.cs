@@ -2,6 +2,7 @@
 using Content.Shared.Materials;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared._RMC14.Power;
 
@@ -13,6 +14,7 @@ public sealed partial class RMCPortableGeneratorSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
     [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
 
     public override void Initialize()
     {
@@ -33,14 +35,14 @@ public sealed partial class RMCPortableGeneratorSystem : EntitySystem
 
     public void OnTargetPowerSet(EntityUid uid, RMCPortableGeneratorComponent component, RMCPortableGeneratorSetTargetPowerMessage args)
     {
-        component.TargetPower = args.TargetPower;
+        component.TargetPower =
+            Math.Clamp(args.TargetPower, component.MinimumPower / 1000, component.MaximumPower / 1000) * 1000;
     }
 
     public void OnStartRequested(EntityUid uid,
         RMCPortableGeneratorComponent component,
         RMCPortableGeneratorStartMessage args)
     {
-        Logger.Debug("Start requested");
         if (!Transform(uid).Anchored)
             return;
 
@@ -57,7 +59,6 @@ public sealed partial class RMCPortableGeneratorSystem : EntitySystem
 
     public void OnStopRequested(EntityUid uid, RMCPortableGeneratorComponent component, RMCPortableGeneratorStopMessage args)
     {
-        Logger.Debug("Stop requested");
         component.On = false;
         UpdateState(uid, component);
     }
@@ -70,22 +71,53 @@ public sealed partial class RMCPortableGeneratorSystem : EntitySystem
 
     public override void Update(float frameTime)
     {
+        if (_net.IsClient)
+            return;
 
-        foreach (var comp in EntityManager.EntityQuery<RMCPortableGeneratorComponent>())
+        var query = EntityQueryEnumerator<RMCPortableGeneratorComponent>();
+        while (query.MoveNext(out var uid, out var gen))
         {
-            UpdateRmcPortableUi(comp.Owner, comp);
+            if (!gen.On)
+            {
+                UpdateRmcPortableUi(uid, gen);
+                continue;
+            }
+
+            var powerRatio = gen.TargetPower / gen.MaximumPower;
+            var consumeTotal = gen.MaterialPerSheet / gen.TimePerSheet * frameTime * powerRatio;
+            gen.FractionalMaterial -= consumeTotal;
+
+            if (gen.FractionalMaterial < 0)
+            {
+                var consumeWhole = -(int)MathF.Floor(gen.FractionalMaterial);
+
+                if (_materialStorage.TryChangeMaterialAmount(uid, gen.Material, -consumeWhole))
+                {
+                    gen.FractionalMaterial += consumeWhole;
+                }
+                else
+                {
+                    gen.FractionalMaterial = 0f;
+                    OnStopRequested(uid, gen, new());
+                }
+            }
+
+            UpdateRmcPortableUi(uid, gen);
         }
+    }
+
+    public float GetTotalMaterial(EntityUid uid, RMCPortableGeneratorComponent component)
+    {
+        var totalMaterial = _materialStorage.GetMaterialAmount(uid, component.Material) + component.FractionalMaterial;
+        return totalMaterial;
     }
 
     private void UpdateRmcPortableUi(EntityUid uid, RMCPortableGeneratorComponent comp)
     {
-        if (_net.IsClient)
-            return;
-
         if (!_uiSystem.IsUiOpen(uid, RMCPortableGeneratorUIKey.Key))
             return;
 
-        var remainingFuel = _materialStorage.GetMaterialAmount(uid, comp.Material);
+        var remainingFuel = GetTotalMaterial(uid, comp) / comp.MaterialPerSheet;
 
         _uiSystem.SetUiState(uid,
             RMCPortableGeneratorUIKey.Key,

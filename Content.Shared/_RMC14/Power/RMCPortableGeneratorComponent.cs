@@ -18,22 +18,34 @@ public sealed partial class RMCPortableGeneratorComponent : Component
     public ProtoId<MaterialPrototype>  Material = "RMCPhoron";
 
     [DataField]
+    public int MaterialPerSheet = 100;
+
+    [DataField]
+    public string MaterialName = "Phoron";
+
+    [DataField]
     public int MaxFuelUnits = 100;
 
     [DataField]
-    public float TimePerFuelUnit = 60.0f; // Seconds per fuel unit.
+    public float TimePerSheet = 60.0f;
 
     [DataField]
     public float TargetPower = 15000.0f;
 
     [DataField]
-    public float MaxTargetPower = 30000.0f;
+    public float MaximumPower = 30000.0f;
+
+    [DataField]
+    public float MinimumPower = 1_000;
 
     [DataField]
     public SoundSpecifier StartSoundEmpty = new SoundCollectionSpecifier("GeneratorTugEmpty");
 
     [DataField]
     public SoundSpecifier StartSound = new SoundCollectionSpecifier("GeneratorTug");
+
+    [DataField]
+    public float FractionalMaterial;
 }
 
 
@@ -52,11 +64,9 @@ public sealed class RMCPortableGeneratorUiState(
 {
     public float RemainingFuel = remainingFuel;
     public float TargetPower = component.TargetPower;
-    public float MaximumPower = component.MaxTargetPower;
-    public float OptimalPower;
+    public float MaximumPower = component.MaximumPower;
+    public string FuelType = component.MaterialName;
     public bool On = component.On;
-
-    // OptimalPower = component.OptimalPower;
 }
 
 [Serializable, NetSerializable]
