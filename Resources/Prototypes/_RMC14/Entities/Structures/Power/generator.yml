@@ -153,6 +153,8 @@
     - type: MaterialStorage
       storageLimit: 10000
       materialWhiteList: [RMCPhoron]
+    - type: Machine
+      board: RMCPortableGeneratorPacmanMachineCircuitBoard
 
 - type: entity
   parent: RMCPortableGeneratorBase
@@ -162,3 +164,5 @@
   components:
     - type: Sprite
       state: portgen1
+    - type: Machine
+      board: RMCPortableGeneratorSuperPacmanMachineCircuitboard
