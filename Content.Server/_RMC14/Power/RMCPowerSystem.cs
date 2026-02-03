@@ -136,6 +136,21 @@ public sealed class RMCPowerSystem : SharedRMCPowerSystem
         _toRemove.Clear();
 
         var power = new Dictionary<EntityUid, float>();
+        var areaPower = new Dictionary<EntityUid, float>();
+
+        var producers = EntityQueryEnumerator<RMCPowerProducerComponent, TransformComponent>();
+        while (producers.MoveNext(out var producer, out var xform))
+        {
+            if (!producer.Enabled || xform.MapUid is not { } map)
+                continue;
+
+            if (producer.Area is { } areaId)
+            {
+                ref var localPower = ref CollectionsMarshal.GetValueRefOrAddDefault(areaPower, areaId, out _);
+                localPower += producer.Watts;
+            }
+        }
+
         var generators = EntityQueryEnumerator<RMCFusionReactorComponent, TransformComponent>();
         while (generators.MoveNext(out var generator, out var xform))
         {
@@ -150,9 +165,9 @@ public sealed class RMCPowerSystem : SharedRMCPowerSystem
         }
 
         var areas = EntityQueryEnumerator<RMCAreaPowerComponent>();
-        while (areas.MoveNext(out var uid, out var areaPower))
+        while (areas.MoveNext(out var uid, out var areaPowerComp))
         {
-            foreach (var apc in areaPower.Apcs)
+            foreach (var apc in areaPowerComp.Apcs)
             {
                 if (TerminatingOrDeleted(apc) ||
                     !TryComp(apc, out TransformComponent? xform))
@@ -180,22 +195,48 @@ public sealed class RMCPowerSystem : SharedRMCPowerSystem
 
             foreach (var remove in _toRemove)
             {
-                areaPower.Apcs.Remove(remove);
+                areaPowerComp.Apcs.Remove(remove);
             }
 
             if (_toRemove.Count > 0)
-                Dirty(uid, areaPower);
+                Dirty(uid, areaPowerComp);
 
             _toRemove.Clear();
         }
 
         foreach (var (map, apcList) in _apcs)
         {
+            var apcs = CollectionsMarshal.AsSpan(apcList);
+
+            foreach (ref var tuple in apcs)
+            {
+                ref var apc = ref tuple.Apc;
+                ref var cell = ref tuple.Cell;
+                var apcComp = apc.Comp1;
+                if (cell == null || apcComp.Area is not { } areaId)
+                    continue;
+                if (!areaPower.TryGetValue(areaId, out var localPower) || localPower <= 0)
+                    continue;
+                var battery = new Entity<BatteryComponent>(cell.Value, cell.Value.Comp);
+                var allocated = Math.Min(localPower, battery.Comp.MaxCharge - battery.Comp.CurrentCharge);
+                _battery.SetCharge(battery, battery.Comp.CurrentCharge + allocated, battery);
+                areaPower[areaId] -= allocated;
+            }
+
+            foreach (var (areaId, leftover) in areaPower)
+            {
+                if (leftover <= 0)
+                    continue;
+                if (!_areaPowerQuery.TryComp(areaId, out var areaComp))
+                    continue;
+                ref var mapPower = ref CollectionsMarshal.GetValueRefOrAddDefault(power, map, out _);
+                mapPower += leftover;
+            }
+
             var wattsPer = 0f;
             if (power.TryGetValue(map, out var watts))
                 wattsPer = watts / apcList.Count;
 
-            var apcs = CollectionsMarshal.AsSpan(apcList);
             foreach (ref var tuple in apcs)
             {
                 ref var apc = ref tuple.Apc;

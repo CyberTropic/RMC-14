@@ -874,6 +874,12 @@ public abstract class SharedRMCPowerSystem : EntitySystem
             {
                 _reactorPoweredLights.GetOrNew(Transform(uid).MapID).Add(uid);
             }
+
+            var producerQuery = EntityQueryEnumerator<RMCPowerProducerComponent>();
+            while (producerQuery.MoveNext(out var uid, out _))
+            {
+
+            }
         }
 
         if (_net.IsClient)

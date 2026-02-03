@@ -54,6 +54,9 @@ public sealed partial class RMCFusionReactorComponent : Component
 
     [DataField, AutoNetworkedField]
     public bool RandomizeDamage;
+
+    [DataField, AutoNetworkedField]
+    public EntityUid? Area;
 }
 
 [Serializable, NetSerializable]
