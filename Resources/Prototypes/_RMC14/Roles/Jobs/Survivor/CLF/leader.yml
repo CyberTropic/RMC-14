@@ -30,6 +30,11 @@
         RMCSkillExecution: 1
     - type: JobPrefix
       prefix: rmc-job-prefix-clf-survivor-commander
+    - type: RMCSurvivor
+    - type: MotionDetectorTracked
+    - type: NpcFactionMember
+      factions:
+      - CLF
   hidden: true
 
 

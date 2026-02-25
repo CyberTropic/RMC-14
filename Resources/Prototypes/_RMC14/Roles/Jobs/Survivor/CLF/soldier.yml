@@ -25,6 +25,11 @@
         RMCSkillJtac: 1
     - type: JobPrefix
       prefix: rmc-job-prefix-clf-survivor-soldier
+    - type: RMCSurvivor
+    - type: MotionDetectorTracked
+    - type: NpcFactionMember
+      factions:
+      - CLF
     - type: EquipSurvivorPreset
       preset: RMCSurvivorPresetCLF
   hidden: true
