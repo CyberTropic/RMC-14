@@ -45,7 +45,7 @@
       - [ RMCCoatMilitiaBrace ]
       - [ RMCCoatMilitiaHauberk ]
       - [ RMCArmorVest ]
-      # - [ ArmorBulletproof ] # todo
+       - [ RMCArmorBulletproof ] 
     - # Rebel helmet
       - [ RMCHeadMilitiaHood ]
       - [ RMCHeadMilitiaBucket ]
