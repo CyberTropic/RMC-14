@@ -26,9 +26,6 @@
       prefix: rmc-job-prefix-clf-survivor-engineer
     - type: RMCSurvivor
     - type: MotionDetectorTracked
-    - type: NpcFactionMember
-      factions:
-      - CLF
     - type: EquipSurvivorPreset
       preset: RMCSurvivorPresetCLF
   hidden: true

@@ -24,9 +24,6 @@
       prefix: rmc-job-prefix-clf-survivor-medic
     - type: RMCSurvivor
     - type: MotionDetectorTracked
-    - type: NpcFactionMember
-      factions:
-      - CLF
     - type: EquipSurvivorPreset
       preset: RMCSurvivorPresetCLFSMG
   hidden: true
