@@ -54,7 +54,7 @@
 - type: entity
   parent: CMSpawnPointJobBase
   id: CMSpawnPointSurvivorCLFMedic
-  name: clf medic spawn point
+  name: survivor clf medic spawn point
   components:
   - type: SpawnPoint
     job_id: RMCSurvivorCLFMedic
