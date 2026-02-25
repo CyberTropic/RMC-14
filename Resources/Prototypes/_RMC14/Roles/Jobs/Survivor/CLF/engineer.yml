@@ -69,7 +69,7 @@
 - type: entity
   parent: CMSpawnPointJobBase
   id: CMSpawnPointSurvivorCLFEngineer
-  name: clf engineer spawn point
+  name: survivor clf engineer spawn point
   components:
   - type: SpawnPoint
     job_id: RMCSurvivorCLFEngineer

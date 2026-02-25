@@ -19,7 +19,7 @@
 - type: startingGear
   id: RMCGearCLFBase
   equipment:
-    mask: RMCM5Bayonet # TODO RMC14
+    mask: RMCCombatUtilityKnifeA
     jumpsuit: RMCJumpsuitCLFSoldier
     back: RMCSatchelLightpack5Slot
     id: RMCIDCardCLFSoldier
@@ -47,9 +47,9 @@
       - [ RMCArmorVest ]
       # - [ ArmorBulletproof ] # todo
     - # Rebel helmet
-      # /obj/item/clothing/head/militia
+      - [ RMCHeadMilitiaHood ]
       - [ RMCHeadMilitiaBucket ]
-      # /obj/item/clothing/head/helmet
+      - [ RMCArmorHelmetSecurity ]
       - [ RMCArmorHelmetSkullcap ]
       # /obj/item/clothing/head/helmet/swat
       - [ RMCHardHat]

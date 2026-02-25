@@ -72,7 +72,7 @@
 - type: entity
   parent: CMSpawnPointJobBase
   id: CMSpawnPointSurvivorCLFLeader
-  name: clf leader spawn point
+  name: survivor clf leader spawn point
   components:
   - type: SpawnPoint
     job_id: RMCSurvivorCLFLeader
