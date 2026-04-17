@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Whisper
-  changes:
-  - message: Added naming guidelines for Skrell and Feroxi.
-    type: Add
-  id: 2610
-  time: '2025-12-06T19:00:50.0000000+00:00'
-  url: https://github.com/RMC-14/RMC-14/pull/8585
 - author: PursuitinAshes
   changes:
   - message: Provost Inspectors have loadout options and a loadout option to choose
@@ -4505,5 +4498,12 @@
   id: 3110
   time: '2026-04-15T01:36:45.0000000+00:00'
   url: https://github.com/RMC-14/RMC-14/pull/9284
+- author: kleinerstation13
+  changes:
+  - message: Resprited SPP lifesaver belt
+    type: Tweak
+  id: 3111
+  time: '2026-04-17T17:42:05.0000000+00:00'
+  url: https://github.com/RMC-14/RMC-14/pull/9626
 Name: RMC14
 Order: -1
