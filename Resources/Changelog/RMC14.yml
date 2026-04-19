@@ -1,33 +1,4 @@
 ﻿Entries:
-- author: PursuitinAshes
-  changes:
-  - message: Provost Inspectors have loadout options and a loadout option to choose
-      which jacket to spawn with.
-    type: Tweak
-  id: 2611
-  time: '2025-12-07T08:51:00.0000000+00:00'
-  url: https://github.com/RMC-14/RMC-14/pull/8549
-- author: J C Denton
-  changes:
-  - message: Trucker survivor and it's variations now replace engineer colonist instead
-      of civilian.
-    type: Tweak
-  id: 2612
-  time: '2025-12-08T07:54:28.0000000+00:00'
-  url: https://github.com/RMC-14/RMC-14/pull/8553
-- author: monomethylhydrazine
-  changes:
-  - message: Added an icon to FORECON PVE riflemen and RTOs.
-    type: Add
-  - message: Added tacmap icons to FORECON PVE roles.
-    type: Add
-  - message: Fixed FORECON PVE roles needing to be manually added to the Recon squad.
-    type: Fix
-  - message: Removed the RTO from FORECON vendors.
-    type: Remove
-  id: 2613
-  time: '2025-12-08T07:55:50.0000000+00:00'
-  url: https://github.com/RMC-14/RMC-14/pull/8563
 - author: Dutch-VanDerLinde
   changes:
   - message: 'LV-624 now displays its colony name: LV-624 Lazarus Landing.'
@@ -4505,5 +4476,26 @@
   id: 3111
   time: '2026-04-17T17:42:05.0000000+00:00'
   url: https://github.com/RMC-14/RMC-14/pull/9626
+- author: monomethylhydrazine
+  changes:
+  - message: '[PVE] Added unique marking flares for the SPP and PMC factions.'
+    type: Add
+  id: 3112
+  time: '2026-04-19T01:32:24.0000000+00:00'
+  url: https://github.com/RMC-14/RMC-14/pull/9549
+- author: Vixting
+  changes:
+  - message: Queens scream will now apply camera shake to those affected.
+    type: Add
+  id: 3113
+  time: '2026-04-19T01:33:07.0000000+00:00'
+  url: https://github.com/RMC-14/RMC-14/pull/9608
+- author: Dygon
+  changes:
+  - message: Avali can now chirp.
+    type: Tweak
+  id: 3114
+  time: '2026-04-19T01:33:58.0000000+00:00'
+  url: https://github.com/RMC-14/RMC-14/pull/9620
 Name: RMC14
 Order: -1
