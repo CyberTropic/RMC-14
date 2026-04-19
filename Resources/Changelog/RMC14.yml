@@ -1,23 +1,4 @@
 ﻿Entries:
-- author: Gosera
-  changes:
-  - message: Fixed M276 pattern M13 holster rig not being able to be equipped on the
-      suit storage slot.
-    type: Fix
-  - message: Fixed M276 pattern M82F flare gun holster rig not being able to be equipped
-      on the suit storage slot.
-    type: Fix
-  id: 2615
-  time: '2025-12-08T07:57:19.0000000+00:00'
-  url: https://github.com/RMC-14/RMC-14/pull/8584
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Fixed xenos being able to pry powered shutters and podlocks. They can
-      still pry powered doors.
-    type: Fix
-  id: 2616
-  time: '2025-12-08T07:59:45.0000000+00:00'
-  url: https://github.com/RMC-14/RMC-14/pull/8579
 - author: NotInButIn
   changes:
   - message: Wooden barricades can now be destroyed with Charge/ToggleCharge and jumped
@@ -4499,5 +4480,23 @@
   id: 3115
   time: '2026-04-19T01:35:10.0000000+00:00'
   url: https://github.com/RMC-14/RMC-14/pull/9650
+- author: Dygon
+  changes:
+  - message: The dropship's camera controls console can now be used to view targets.
+    type: Tweak
+  - message: Swapping camera views repeatedly without closing the UI no longer causes
+      FPS drops.
+    type: Fix
+  id: 3116
+  time: '2026-04-19T01:37:32.0000000+00:00'
+  url: https://github.com/RMC-14/RMC-14/pull/9589
+- author: IceNoobXD
+  changes:
+  - message: Added inhand sprites to all of the materials (glass, metal, plastic,
+      etc.) and some other items
+    type: Add
+  id: 3117
+  time: '2026-04-19T01:36:42.0000000+00:00'
+  url: https://github.com/RMC-14/RMC-14/pull/9551
 Name: RMC14
 Order: -1
