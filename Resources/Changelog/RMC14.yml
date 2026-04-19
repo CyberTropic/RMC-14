@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Dutch-VanDerLinde
-  changes:
-  - message: 'LV-624 now displays its colony name: LV-624 Lazarus Landing.'
-    type: Tweak
-  id: 2614
-  time: '2025-12-08T07:56:27.0000000+00:00'
-  url: https://github.com/RMC-14/RMC-14/pull/8587
 - author: Gosera
   changes:
   - message: Fixed M276 pattern M13 holster rig not being able to be equipped on the
@@ -4497,5 +4490,14 @@
   id: 3114
   time: '2026-04-19T01:33:58.0000000+00:00'
   url: https://github.com/RMC-14/RMC-14/pull/9620
+- author: SharkSnake98
+  changes:
+  - message: Added new drinks and mains for the colony ration packs
+    type: Add
+  - message: Replaced the current Colony MRE fills with the correct ones.
+    type: Tweak
+  id: 3115
+  time: '2026-04-19T01:35:10.0000000+00:00'
+  url: https://github.com/RMC-14/RMC-14/pull/9650
 Name: RMC14
 Order: -1
