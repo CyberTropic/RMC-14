@@ -1,134 +1,6 @@
 ﻿Entries:
 - author: Ian321
   changes:
-  - message: The pyrotechnician weapons specialization has been added.
-    type: Add
-  - message: M34-T incinerator unit used by the pyro specialist. Comes with an improved
-      extinguisher, can hold large tanks and can directly pull fuel from an equipped
-      Broiler-T system.
-    type: Add
-  - message: Broiler-T flexible refueling system used by the pyro specialist. Stores
-      three large fuel canisters that can be directly access by the M34-T incinerator.
-    type: Add
-  - message: Napalm B fuel that is armor shredding like the B-Gel, but also spreads
-      over a large area.
-    type: Add
-  - message: Napalm X fuel that burns brighter and longer.
-    type: Add
-  - message: There can now only be one of each weapon specialization.
-    type: Tweak
-  - message: Industrial chem master for Ordnance Technicians.
-    type: Add
-  - message: Sticky and High-Combustion Napalm that can be made by Ordnance Technicians.
-    type: Add
-  - message: Incinerator tanks and the guidebook now explain how different fuels behave.
-    type: Add
-  id: 2637
-  time: '2025-12-08T08:44:51.0000000+00:00'
-  url: https://github.com/RMC-14/RMC-14/pull/8498
-- author: TheLuggage05
-  changes:
-  - message: Added B-Gel tanks for use in the M34 incinerator unit.
-    type: Add
-  id: 2638
-  time: '2025-12-08T08:44:51.0000000+00:00'
-  url: https://github.com/RMC-14/RMC-14/pull/8498
-- author: DrSmugleaf
-  changes:
-  - message: Added hive boons, accessible by the Queen through the manage hive action.
-      More boons will be available in the future, obtainable by spending royal resin
-      which is obtained by placing a hive cluster next to a broken telecommunications
-      tower 55 minutes after round-start.
-    type: Add
-  - message: Added the His Grace hive boon. It begins the 10-minute hatching process
-      of the King. It costs 0 royal resin, requires a hive pylon at both telecommunications
-      tower, and is obtainable at a random time between 1 hour 30 minutes and 1 hour
-      55 minutes.
-    type: Add
-  - message: Added being able to sacrifice 1 burrowed larva as Queen to give a xeno
-      250 evolution points, through the manage hive action.
-    type: Add
-  - message: Added xeno's base 1 second crit grace where they can still move when
-      going into crit.
-    type: Add
-  - message: Added the nuke, by Aurallianz. It can be purchased using intel points
-      on the tech tree and deployed on the planet.
-    type: Add
-  - message: Added examine tooltips to any xenos that are fire immune.
-    type: Add
-  - message: Added the missing blue shield icon to Hedgehog Ravagers to show when
-      they are immune to damage.
-    type: Add
-  - message: Fixed Warrior Lunge being inconsistent, specially on high ping.
-    type: Fix
-  - message: Fixed not being able to process all intel even if you have all documents
-      and other intel items.
-    type: Fix
-  - message: Fixed pulling others being around 40% too slow.
-    type: Fix
-  - message: Fixed Resin Whisperer Hivelord not being able to use tunnels.
-    type: Fix
-  - message: FIxed Spitters losing their movement speed buff when firing a charged
-      spit, instead of it lasting for the full duration.
-    type: Fix
-  - message: Fixed recovery nodes healing 20 instead of 25 health, and fixed them
-      having a cooldown of 5 seconds instead of 3 seconds.
-    type: Fix
-  - message: Fixed being able to sell players on the Requisitions elevator if they
-      are on a power loader.
-    type: Fix
-  - message: Fixed recycling partially spent dropship ammo giving you back the full
-      price.
-    type: Fix
-  - message: Fixed BLU-200 'Dragon's Breath' implosion rockets (the one that pulls
-      you in) not having a 4-second long sound and laser warning.
-    type: Fix
-  - message: Fixed M74 AGM-F grenades not having a max hit cap of 5 per grenade on
-      the same target.
-    type: Fix
-  - message: Fixed being able to toggle storage drawing method on other people's equipped
-      items.
-    type: Fix
-  - message: Fixed being able to hear hijack audio if you set it to 0% until you set
-      it to 0% again.
-    type: Fix
-  - message: Fixed conveyors having higher health than intended.
-    type: Fix
-  - message: Fixed Berserker Ravager Apprehend resetting your melee cooldown.
-    type: Fix
-  - message: Fixed being able to refill HEAP magazines with regular bullet boxes.
-    type: Fix
-  - message: Fixed the motion detector sound being audible further than 7 tiles away
-      from the source.
-    type: Fix
-  - message: Fixed pheromones not deactivating when the xeno giving them ghosts.
-    type: Fix
-  - message: Fixed getting pushed by resin structures that finish building on top
-      of you. Any player that is standing where a resin structure finishes building
-      will ignore collision with it until they move out of it, or 5 seconds pass,
-      whichever happens sooner.
-    type: Fix
-  - message: Changed the Rest action tooltip to mention that you can also press Shift+R
-      to rest.
-    type: Tweak
-  - message: Updated the Sentinel sleeping sprite, by Aleksh.
-    type: Tweak
-  - message: Updated the Roadmap.
-    type: Tweak
-  id: 2639
-  time: '2025-12-08T08:58:18.0000000+00:00'
-  url: https://github.com/RMC-14/RMC-14/pull/8597
-- author: DrSmugleaf
-  changes:
-  - message: Added 2 new hive boons, hive boon of fire resistance which grants all
-      xenos fire immunity for 5 minutes, and surge of larva which grants 5 burrowed
-      larva to the hive.
-    type: Add
-  id: 2640
-  time: '2025-12-08T11:00:59.820643+00:00'
-  url: null
-- author: Ian321
-  changes:
   - message: The selected dropship navigation target is now highlighted correctly.
     type: Fix
   id: 2641
@@ -4516,5 +4388,40 @@
   id: 3137
   time: '2026-04-22T03:53:33.0000000+00:00'
   url: https://github.com/RMC-14/RMC-14/pull/9451
+- author: TadJohnson00
+  changes:
+  - message: '[PVE] [RCM] added the L49 assault shotgun, available for use by Assault
+      Engineers.'
+    type: Add
+  - message: '[PVE] [RCM] tweaked the L90U1 underbarrel shotgun, allowing it to take
+      a wider variety of shotgun shells while reducing its effectiveness as a breaching
+      tool.'
+    type: Tweak
+  id: 3138
+  time: '2026-04-22T03:55:18.0000000+00:00'
+  url: https://github.com/RMC-14/RMC-14/pull/9350
+- author: wheelwrightt
+  changes:
+  - message: NVGs now display their charge upon examining helmet even when not turned
+      on.
+    type: Tweak
+  id: 3139
+  time: '2026-04-22T03:56:10.0000000+00:00'
+  url: https://github.com/RMC-14/RMC-14/pull/9302
+- author: PursuitInAshes
+  changes:
+  - message: The CPR Dummy in the SEA vendor is now in the SEA Tech. The CMO now also
+      has access to CPR Dummies in their vendor.
+    type: Tweak
+  id: 3140
+  time: '2026-04-22T03:57:15.0000000+00:00'
+  url: https://github.com/RMC-14/RMC-14/pull/9198
+- author: Ian321
+  changes:
+  - message: Surplus explosives crate can now be bought by requisitions.
+    type: Add
+  id: 3141
+  time: '2026-04-22T03:56:39.0000000+00:00'
+  url: https://github.com/RMC-14/RMC-14/pull/9239
 Name: RMC14
 Order: -1
