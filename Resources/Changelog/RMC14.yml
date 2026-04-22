@@ -1,29 +1,4 @@
 ﻿Entries:
-- author: YO0teacher
-  changes:
-  - message: Infected people shaking doesn't show a popup for others when they're
-      inside a thermal tarp.
-    type: Tweak
-  - message: Fixed visual and audio issues resulting from client desync with invisibility.
-    type: Fix
-  - message: Fixed being able to PB stealthed people in your own faction.
-    type: Fix
-  id: 2633
-  time: '2025-12-08T08:32:28.0000000+00:00'
-  url: https://github.com/RMC-14/RMC-14/pull/8412
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Added Shivas survivor variants!
-    type: Add
-  - message: Fixed biosuits not resisting sentinel slow spit stun.
-    type: Fix
-  - message: Fixed biosuits not having light armor speed.
-    type: Fix
-  - message: Added a winter coat for the corporate liaison, located in their vendor.
-    type: Add
-  id: 2634
-  time: '2025-12-08T08:35:22.0000000+00:00'
-  url: https://github.com/RMC-14/RMC-14/pull/8586
 - author: Dutch-VanDerLinde
   changes:
   - message: Added chatsan for the word 'surv' for marines.
@@ -4512,5 +4487,28 @@
   id: 3133
   time: '2026-04-22T00:08:35.958844+00:00'
   url: null
+- author: CatAndHats
+  changes:
+  - message: 'Chance''s Claim has recieved a passover: the pipe network has been added
+      which is expansive stretching across the entire map, LZ1 (West LZ) North Comms
+      spawn now has a shortcut to its north giving a new route to the west of A-block,
+      survivor loot has been changed at both dropships and the scout cloak has been
+      moved eastward out of the hive to the reactor entrance, the map is now grimier
+      and has recieved lots of missing prop items, and the landing zones now have
+      much better gauss turret coverage.'
+    type: Add
+  - message: Added pre-armed CLF and UNMC IFF claymores for mapping/event purposes.
+    type: Add
+  id: 3134
+  time: '2026-04-22T00:08:49.0000000+00:00'
+  url: https://github.com/RMC-14/RMC-14/pull/9580
+- author: Ian321
+  changes:
+  - message: When a foxtrot marine enters cryosleep a new one will be woken up to
+      replace them.
+    type: Add
+  id: 3135
+  time: '2026-04-22T00:09:24.0000000+00:00'
+  url: https://github.com/RMC-14/RMC-14/pull/9698
 Name: RMC14
 Order: -1
