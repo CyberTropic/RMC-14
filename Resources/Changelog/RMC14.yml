@@ -1,23 +1,4 @@
 ﻿Entries:
-- author: Max_Power
-  changes:
-  - message: Added drop sounds for guns, tools, toolboxes, backpacks, binoculars and
-      armors!
-    type: Add
-  - message: Lowered volume for pickup, drop and throw sounds across the board
-    type: Tweak
-  - message: Fixed XL Armor vests and Shotguns having the incorrect throw sounds
-    type: Fix
-  id: 2631
-  time: '2025-12-08T08:29:14.0000000+00:00'
-  url: https://github.com/RMC-14/RMC-14/pull/8591
-- author: SharkSnake98
-  changes:
-  - message: Fixed test fails
-    type: Fix
-  id: 2632
-  time: '2025-12-08T08:33:16.0000000+00:00'
-  url: https://github.com/RMC-14/RMC-14/pull/8431
 - author: YO0teacher
   changes:
   - message: Infected people shaking doesn't show a popup for others when they're
@@ -4515,5 +4496,21 @@
   id: 3131
   time: '2026-04-22T00:06:11.0000000+00:00'
   url: https://github.com/RMC-14/RMC-14/pull/9672
+- author: nbstrong
+  changes:
+  - message: MRE ration packs now have to be torn open before you can access their
+      contents.
+    type: Fix
+  id: 3132
+  time: '2026-04-22T00:07:32.0000000+00:00'
+  url: https://github.com/RMC-14/RMC-14/pull/9673
+- author: nbstrong
+  changes:
+  - message: MRE ration packs now have to be torn open before you can access their
+      contents.
+    type: Fix
+  id: 3133
+  time: '2026-04-22T00:08:35.958844+00:00'
+  url: null
 Name: RMC14
 Order: -1
