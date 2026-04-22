@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SharkSnake98
-  changes:
-  - message: Added Weather Props and Weather Ambient Effects
-    type: Add
-  id: 2630
-  time: '2025-12-08T08:29:46.0000000+00:00'
-  url: https://github.com/RMC-14/RMC-14/pull/8230
 - author: Max_Power
   changes:
   - message: Added drop sounds for guns, tools, toolboxes, backpacks, binoculars and
@@ -4514,5 +4507,13 @@
   id: 3130
   time: '2026-04-22T00:04:39.0000000+00:00'
   url: https://github.com/RMC-14/RMC-14/pull/9567
+- author: Dygon
+  changes:
+  - message: You can now see local chat near the observed player while using the Overwatch
+      Console or Watch Xeno action.
+    type: Tweak
+  id: 3131
+  time: '2026-04-22T00:06:11.0000000+00:00'
+  url: https://github.com/RMC-14/RMC-14/pull/9672
 Name: RMC14
 Order: -1
