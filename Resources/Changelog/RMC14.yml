@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Backpacks selected in marine vendors will now replace your current backpack
-      with the vended one. The contents will transfer.
-    type: Tweak
-  id: 2628
-  time: '2025-12-08T08:26:15.0000000+00:00'
-  url: https://github.com/RMC-14/RMC-14/pull/8539
-- author: Dutch-VanDerLinde
-  changes:
-  - message: FORECON playtime is now visible in the stats menu under 'Military Survivor'.
-    type: Tweak
-  id: 2629
-  time: '2025-12-08T08:27:08.0000000+00:00'
-  url: https://github.com/RMC-14/RMC-14/pull/8540
 - author: SharkSnake98
   changes:
   - message: Added Weather Props and Weather Ambient Effects
@@ -4511,5 +4496,23 @@
   id: 3128
   time: '2026-04-22T00:00:04.0000000+00:00'
   url: https://github.com/RMC-14/RMC-14/pull/9424
+- author: Dygon
+  changes:
+  - message: Increased Tesla Coil range from 3 to 3.95 tiles.
+    type: Fix
+  id: 3129
+  time: '2026-04-22T00:05:01.0000000+00:00'
+  url: https://github.com/RMC-14/RMC-14/pull/9687
+- author: Vixting
+  changes:
+  - message: Resin surge now has an overlay.
+    type: Add
+  - message: Resin surge is now predicted
+    type: Tweak
+  - message: Burrower overlay is now visible through walls.
+    type: Tweak
+  id: 3130
+  time: '2026-04-22T00:04:39.0000000+00:00'
+  url: https://github.com/RMC-14/RMC-14/pull/9567
 Name: RMC14
 Order: -1
