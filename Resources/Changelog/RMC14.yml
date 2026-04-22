@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: Ian321
   changes:
-  - message: The selected dropship navigation target is now highlighted correctly.
-    type: Fix
-  id: 2641
-  time: '2025-12-08T11:08:15.0000000+00:00'
-  url: https://github.com/RMC-14/RMC-14/pull/8346
-- author: Ian321
-  changes:
   - message: Flares can no longer be shot into the sky while devoured.
     type: Fix
   id: 2642
@@ -4423,5 +4416,15 @@
   id: 3141
   time: '2026-04-22T03:56:39.0000000+00:00'
   url: https://github.com/RMC-14/RMC-14/pull/9239
+- author: Arykh
+  changes:
+  - message: Vitamin and Protein now convert themselves into Nutriment.
+    type: Tweak
+  - message: Nutriment now has an OD of 60u. Going over 60u will cause nausea and
+      vomiting as Nutriment tries to rapidly lower itself below 60u.
+    type: Tweak
+  id: 3142
+  time: '2026-04-22T03:58:53.0000000+00:00'
+  url: https://github.com/RMC-14/RMC-14/pull/9023
 Name: RMC14
 Order: -1
