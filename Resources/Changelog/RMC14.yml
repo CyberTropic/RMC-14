@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: Dygon
-  changes:
-  - message: Shooting a dummy with a gun now shows the damage popup to the shooter.
-    type: Fix
-  id: 2625
-  time: '2025-12-08T08:22:10.0000000+00:00'
-  url: https://github.com/RMC-14/RMC-14/pull/8532
-- author: noctyrnal
-  changes:
-  - message: Replaced the improvised flamer with the LC9 incinerator unit, a flamer
-      designed for colony use.
-    type: Add
-  id: 2626
-  time: '2025-12-08T08:24:28.0000000+00:00'
-  url: https://github.com/RMC-14/RMC-14/pull/8536
-- author: Thereisabear
-  changes:
-  - message: Red Neckerchief to loadout selections
-    type: Add
-  id: 2627
-  time: '2025-12-08T08:24:45.0000000+00:00'
-  url: https://github.com/RMC-14/RMC-14/pull/8535
 - author: Dutch-VanDerLinde
   changes:
   - message: Backpacks selected in marine vendors will now replace your current backpack
@@ -4512,5 +4490,26 @@
   id: 3125
   time: '2026-04-21T00:03:16.0000000+00:00'
   url: https://github.com/RMC-14/RMC-14/pull/9638
+- author: Dygon
+  changes:
+  - message: Attacking a phone as a xenonid will stop any sound it's currently playing.
+    type: Tweak
+  id: 3126
+  time: '2026-04-22T00:00:50.0000000+00:00'
+  url: https://github.com/RMC-14/RMC-14/pull/9629
+- author: Dygon
+  changes:
+  - message: Claymores no longer explode while undeployed.
+    type: Fix
+  id: 3127
+  time: '2026-04-21T23:59:08.0000000+00:00'
+  url: https://github.com/RMC-14/RMC-14/pull/9578
+- author: MidZik
+  changes:
+  - message: Fixed Steelcrest's Soak ability occasionally healing for more than intended.
+    type: Fix
+  id: 3128
+  time: '2026-04-22T00:00:04.0000000+00:00'
+  url: https://github.com/RMC-14/RMC-14/pull/9424
 Name: RMC14
 Order: -1
