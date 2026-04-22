@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: Thereisabear
-  changes:
-  - message: Actually added the Red Neckerchief to loadouts
-    type: Add
-  id: 2647
-  time: '2025-12-09T01:46:19.0000000+00:00'
-  url: https://github.com/RMC-14/RMC-14/pull/8608
-- author: NotInButIn
-  changes:
-  - message: Fixed guns spawning in space from weapons spawners.
-    type: Fix
-  id: 2648
-  time: '2025-12-09T01:50:40.0000000+00:00'
-  url: https://github.com/RMC-14/RMC-14/pull/8622
-- author: DrSmugleaf
-  changes:
-  - message: Fixed King shield lightning effect freezing the server.
-    type: Fix
-  id: 2649
-  time: '2025-12-09T02:03:19.508431+00:00'
-  url: null
 - author: Dutch-VanDerLinde
   changes:
   - message: Fixed FORECON never spawning with a secondary weapon.
@@ -4443,5 +4422,42 @@
   id: 3147
   time: '2026-04-22T04:04:59.0000000+00:00'
   url: https://github.com/RMC-14/RMC-14/pull/9701
+- author: CatAndHats
+  changes:
+  - message: Added survivor spawn together inserts to Shiva's Snowball at Church,
+      Command Centre, Botany, Crisis Centre, and Garage
+    type: Add
+  - message: Changed survivor loot on Shiva's Snowball. Materials and type-19s moved
+      to Fort Biceps from engineering, Type-23 moved to junkyard from disposals, MK1s
+      moved to south of warehouse from research hab.
+    type: Tweak
+  - message: Fixed incorrect vehicle placement on Shiva causing people to get trapped.
+    type: Fix
+  id: 3148
+  time: '2026-04-22T04:08:39.0000000+00:00'
+  url: https://github.com/RMC-14/RMC-14/pull/9682
+- author: IceNoobXD
+  changes:
+  - message: Examining a Pyro WS with the Pyro armor will now display their fire immunity.
+    type: Tweak
+  - message: CBRN is now immune to fire if they have the full MOPP armor equiped!
+    type: Fix
+  id: 3149
+  time: '2026-04-22T04:07:50.0000000+00:00'
+  url: https://github.com/RMC-14/RMC-14/pull/9695
+- author: CatAndHats
+  changes:
+  - message: Added survivor spawn together inserts to Kutjevo Refinery
+    type: Add
+  - message: Kutjevo North LZ dorms now has an extra route where rock used to be,
+      North LZ eastern entrance now has two dilapidated buildings, North-western colony
+      grounds is no longer a hellchoke and has been widened with multiple new paths,
+      western medical entrance has lost most of the rocks there to open it up, comms
+      spawns have been changed - one will always spawn in the centre two spawns and
+      one will always spawn at the map edge in either the north or south.
+    type: Tweak
+  id: 3150
+  time: '2026-04-22T04:08:19.0000000+00:00'
+  url: https://github.com/RMC-14/RMC-14/pull/9679
 Name: RMC14
 Order: -1
