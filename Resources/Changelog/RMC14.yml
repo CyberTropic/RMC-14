@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: ExponentialWizard
-  changes:
-  - message: Fixed being kicked out of chairs by walls
-    type: Fix
-  id: 2654
-  time: '2025-12-09T05:12:52.0000000+00:00'
-  url: https://github.com/RMC-14/RMC-14/pull/7453
-- author: Ian321
-  changes:
-  - message: Incinerator tank can now be emptied into reagent tanks.
-    type: Tweak
-  id: 2655
-  time: '2025-12-09T05:11:58.0000000+00:00'
-  url: https://github.com/RMC-14/RMC-14/pull/8627
 - author: Ian321
   changes:
   - message: Fixed max flame stacks of Napalm X being 20 instead of 40.
@@ -4461,5 +4447,21 @@
   id: 3153
   time: '2026-04-22T04:12:52.0000000+00:00'
   url: https://github.com/RMC-14/RMC-14/pull/9555
+- author: IceNoobXD
+  changes:
+  - message: new Lobby Icons for the Queen, Xenonid, Correspondent, Rifleman and Colonist
+      roles
+    type: Add
+  id: 3154
+  time: '2026-04-22T04:14:50.0000000+00:00'
+  url: https://github.com/RMC-14/RMC-14/pull/9457
+- author: TadJohnson00
+  changes:
+  - message: The TSE's L1 ballistic helmet has been changed to the royal L5A1 ballistic
+      helmet.
+    type: Tweak
+  id: 3155
+  time: '2026-04-22T04:13:54.0000000+00:00'
+  url: https://github.com/RMC-14/RMC-14/pull/9573
 Name: RMC14
 Order: -1
