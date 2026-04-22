@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Fixed FORECON never spawning with a secondary weapon.
-    type: Fix
-  id: 2651
-  time: '2025-12-09T02:05:47.0000000+00:00'
-  url: https://github.com/RMC-14/RMC-14/pull/8625
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Fixed ghost halfbright randomly turning off
-    type: Fix
-  id: 2652
-  time: '2025-12-09T02:24:59.0000000+00:00'
-  url: https://github.com/RMC-14/RMC-14/pull/8626
 - author: DrSmugleaf
   changes:
   - message: Fixed King and nuke.
@@ -4459,5 +4445,20 @@
   id: 3150
   time: '2026-04-22T04:08:19.0000000+00:00'
   url: https://github.com/RMC-14/RMC-14/pull/9679
+- author: IceNoobXD
+  changes:
+  - message: all platforms types have now less health and round platforms are now
+      breakable!
+    type: Tweak
+  id: 3151
+  time: '2026-04-22T04:10:22.0000000+00:00'
+  url: https://github.com/RMC-14/RMC-14/pull/9582
+- author: Dygon
+  changes:
+  - message: Supply drops now always drop at the given coordinates.
+    type: Fix
+  id: 3152
+  time: '2026-04-22T04:11:11.0000000+00:00'
+  url: https://github.com/RMC-14/RMC-14/pull/9581
 Name: RMC14
 Order: -1
