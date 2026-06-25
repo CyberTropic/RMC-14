@@ -35,7 +35,6 @@ public sealed class RMCPowerSystem : SharedRMCPowerSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ExplosionSystem _explosion = default!;
     [Dependency] private readonly SharedPointLightSystem _light = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
     [ViewVariables]
