@@ -1,5 +1,6 @@
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using Content.Server.Explosion.EntitySystems;
+using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.PowerCell;
@@ -8,8 +9,10 @@ using Content.Shared._RMC14.CCVar;
 using Content.Shared._RMC14.Power;
 using Content.Shared.Audio;
 using Content.Shared.Examine;
+using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.PowerCell;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
@@ -22,11 +25,14 @@ public sealed class RMCPowerSystem : SharedRMCPowerSystem
 {
     [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly AreaSystem _area = default!;
     [Dependency] private readonly BatterySystem _battery = default!;
     [Dependency] private readonly PowerCellSystem _cell = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ExplosionSystem _explosion = default!;
     [Dependency] private readonly SharedPointLightSystem _light = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -85,6 +91,8 @@ public sealed class RMCPowerSystem : SharedRMCPowerSystem
 
     protected override void OnReceiverMapInit(Entity<RMCPowerReceiverComponent> ent, ref MapInitEvent args)
     {
+        base.OnReceiverMapInit(ent, ref args);
+
         if (!TryComp(ent, out ApcPowerReceiverComponent? receiver))
             return;
 
@@ -233,6 +241,7 @@ public sealed class RMCPowerSystem : SharedRMCPowerSystem
             return;
 
         _nextUpdate = _timing.CurTime + _updateEvery;
+        UpdateOverloadedReactorFeedback(_timing.CurTime);
 
         _toRemove.Clear();
         foreach (var (map, apcs) in _apcs)
@@ -423,5 +432,52 @@ public sealed class RMCPowerSystem : SharedRMCPowerSystem
                 Dirty(apc, apcComp);
             }
         }
+    }
+
+    private void UpdateOverloadedReactorFeedback(TimeSpan time)
+    {
+        var reactors = EntityQueryEnumerator<RMCFusionReactorComponent, TransformComponent>();
+        while (reactors.MoveNext(out var uid, out var reactor, out var xform))
+        {
+            if (!reactor.Overloaded)
+            {
+                reactor.OverloadNextFeedbackAt = TimeSpan.Zero;
+                continue;
+            }
+
+            if (reactor.State != RMCFusionReactorState.Working || xform.MapUid == null)
+                continue;
+
+            if (reactor.OverloadNextFeedbackAt == TimeSpan.Zero)
+            {
+                reactor.OverloadNextFeedbackAt = time + GetOverloadFeedbackDelay(reactor);
+                continue;
+            }
+
+            if (time < reactor.OverloadNextFeedbackAt)
+                continue;
+
+            reactor.OverloadNextFeedbackAt = time + GetOverloadFeedbackDelay(reactor);
+
+            var hiss = _random.Prob(0.4f);
+            _popup.PopupEntity(
+                Loc.GetString(hiss
+                    ? "rmc-fusion-reactor-overload-feedback-hiss"
+                    : "rmc-fusion-reactor-overload-feedback-hum",
+                    ("reactor", uid)),
+                uid,
+                PopupType.SmallCaution);
+            _audio.PlayPvs(hiss ? reactor.OverloadHissSound : reactor.OverloadHumSound, uid);
+        }
+    }
+
+    private TimeSpan GetOverloadFeedbackDelay(RMCFusionReactorComponent reactor)
+    {
+        var min = Math.Max(0, reactor.OverloadFeedbackMinDelay.TotalSeconds);
+        var max = Math.Max(min, reactor.OverloadFeedbackMaxDelay.TotalSeconds);
+        if (max <= min)
+            return TimeSpan.FromSeconds(min);
+
+        return TimeSpan.FromSeconds(_random.NextFloat((float) min, (float) max));
     }
 }

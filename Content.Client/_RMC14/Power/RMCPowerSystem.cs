@@ -1,5 +1,6 @@
 ﻿using Content.Client.Power.Components;
 using Content.Shared._RMC14.Power;
+using Robust.Client.GameObjects;
 
 namespace Content.Client._RMC14.Power;
 
@@ -10,6 +11,8 @@ public sealed class RMCPowerSystem : SharedRMCPowerSystem
         base.Initialize();
         SubscribeLocalEvent<RMCApcComponent, AfterAutoHandleStateEvent>(OnApcState);
         SubscribeLocalEvent<RMCPortableGeneratorComponent, AfterAutoHandleStateEvent>(OnPortableGeneratorState);
+
+        SubscribeLocalEvent<RMCReactorPoweredLightComponent, AppearanceChangeEvent>(OnReactorPoweredLightAppearanceChange);
     }
 
     public override bool IsPowered(EntityUid ent)
@@ -53,5 +56,10 @@ public sealed class RMCPowerSystem : SharedRMCPowerSystem
         {
             Log.Error($"Error refreshing {nameof(RMCPortableGeneratorBui)}\n{e}");
         }
+    }
+
+    private void OnReactorPoweredLightAppearanceChange(Entity<RMCReactorPoweredLightComponent> ent, ref AppearanceChangeEvent args)
+    {
+        Pointlight.SetEnabled(ent, ent.Comp.Enabled);
     }
 }
