@@ -129,6 +129,7 @@
 - type: entity
   abstract: true
   id: RMCPortableGeneratorBase
+  suffix: RMC
   parent: [ BaseMachine, SmallConstructibleMachine, StructureWheeled]
   components:
     - type: GuideHelp

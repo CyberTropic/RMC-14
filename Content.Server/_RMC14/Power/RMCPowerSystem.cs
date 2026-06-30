@@ -228,6 +228,7 @@ public sealed class RMCPowerSystem : SharedRMCPowerSystem
                 areaPower += gen.Watts * setting;
             }
 
+            _ambientSound.SetAmbience(uid, true);
             Dirty(uid, gen);
         }
     }

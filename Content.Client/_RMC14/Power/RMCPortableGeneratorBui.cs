@@ -47,14 +47,14 @@ public sealed class RMCPortableGeneratorBui(EntityUid owner, Enum uiKey) : Bound
             _window.ToggleButton.Text = "Start";
         }
 
-        var fuelPercent = gen.Sheets > 0 ? gen.SheetFraction * 100 : 0;
+        var fuelPercent = gen.SheetFraction * 100;
         _window.FuelLabel.SetMarkupPermissive(
-            $"[color=#5B88B0]Fuel:[/color] [bold]{gen.Sheets}[/bold] sheets of {gen.FuelName} ({fuelPercent:F0}% of current sheet)");
+            $"[color=#5B88B0]Fuel:[/color] [bold]{gen.Sheets}[/bold] sheets of {gen.FuelName}");
 
         _window.FuelBar.MinValue = 0;
-        _window.FuelBar.MaxValue = gen.MaxSheets;
-        _window.FuelBar.Value = gen.Sheets;
-        _window.FuelBarLabel.Text = $"{gen.Sheets} / {gen.MaxSheets}";
+        _window.FuelBar.MaxValue = 100;
+        _window.FuelBar.Value = fuelPercent;
+        _window.FuelBarLabel.Text = $"{fuelPercent:F0}% of current sheet";
 
         _window.EjectButton.Disabled = gen.On;
 

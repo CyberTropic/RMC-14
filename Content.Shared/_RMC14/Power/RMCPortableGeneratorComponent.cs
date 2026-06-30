@@ -1,4 +1,5 @@
 using Content.Shared._RMC14.Marines.Skills;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -6,7 +7,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared._RMC14.Power;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
-[Access(typeof(SharedRMCPowerSystem))]
+[Access(typeof(SharedRMCPowerSystem), typeof(RMCPortableGeneratorSystem))]
 public sealed partial class RMCPortableGeneratorComponent : Component
 {
     [DataField, AutoNetworkedField]
@@ -71,6 +72,12 @@ public sealed partial class RMCPortableGeneratorComponent : Component
 
     [DataField, AutoNetworkedField]
     public EntProtoId<SkillDefinitionComponent> Skill = "RMCSkillEngineer";
+
+    [DataField]
+    public SoundSpecifier StartSoundEmpty = new SoundCollectionSpecifier("GeneratorTugEmpty");
+
+    [DataField]
+    public SoundSpecifier StartSound = new SoundCollectionSpecifier("GeneratorTug");
 
 }
 
